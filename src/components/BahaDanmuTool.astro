@@ -1,0 +1,184 @@
+---
+// Baha 彈幕 → ASS 工具 UI shell.
+// This is a static fragment; behaviour is provided by the colocated client
+// script `BahaDanmuTool.client.ts` (loaded via a <script> with type=module).
+---
+
+<section class="baha-danmu-tool" data-baha-danmu-tool aria-labelledby="baha-tool-heading">
+  <h1 id="baha-tool-heading">巴哈動漫瘋彈幕轉 ASS 工具</h1>
+
+  <p class="baha-danmu-tool__hint">
+    將動漫瘋影片頁網址 (含 <code>sn=</code>) 或純 SN 數字貼到下方輸入框,按「取得」即可下載 ASS 字幕。
+    範例: <code>https://ani.gamer.com.tw/animeVideo.php?sn=15577</code>
+  </p>
+
+  <form class="baha-danmu-tool__form" onsubmit="return false;">
+    <label class="baha-danmu-tool__field">
+      <span>網址或 SN</span>
+      <input
+        id="baha-param"
+        name="param"
+        type="text"
+        placeholder="請輸入網站網址或者 sn ID"
+        autocomplete="off"
+        spellcheck="false"
+      />
+    </label>
+
+    <label class="baha-danmu-tool__field baha-danmu-tool__field--narrow">
+      <span>時間差 (秒)</span>
+      <input id="baha-offset" name="offset" type="number" value="0" step="1" />
+    </label>
+
+    <button id="baha-get" type="button" class="baha-danmu-tool__submit">取得</button>
+  </form>
+
+  <p class="baha-danmu-tool__progress">
+    <span>進度狀態:</span>
+    <span id="baha-status" data-status="idle"></span>
+  </p>
+
+  <p id="baha-error" class="baha-danmu-tool__error" role="alert" hidden></p>
+
+  <p class="baha-danmu-tool__download-row">
+    <a id="baha-download" class="baha-danmu-tool__download" hidden>下載 ASS</a>
+  </p>
+
+  <section class="baha-danmu-tool__notes">
+    <h2>使用說明</h2>
+    <ul>
+      <li>建議搭配 PotPlayer 並將彈幕字幕拖進第二字幕。</li>
+      <li>本工具透過第三方 <code>corsproxy.io</code> 中繼存取巴哈 API,該服務若停擺工具會無法運作。</li>
+      <li>新版巴哈 API 限制非登入用戶取得完整彈幕,因此部份較新動畫可能拿到空陣列。</li>
+    </ul>
+  </section>
+</section>
+
+<script>
+  // Hydrate the tool. Astro's bundler will compile and inject this for us.
+  import '../components/BahaDanmuTool.client.ts';
+</script>
+
+<style>
+  .baha-danmu-tool {
+    max-width: 720px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+  }
+
+  .baha-danmu-tool h1 {
+    margin: 0 0 0.5rem;
+    color: #19185d;
+    font-size: 1.5rem;
+  }
+
+  .baha-danmu-tool__hint {
+    color: #555;
+    font-size: 0.95rem;
+    margin: 0 0 1rem;
+  }
+  .baha-danmu-tool__hint code {
+    background: #f0f0f0;
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+    font-size: 0.85em;
+  }
+
+  .baha-danmu-tool__form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: flex-end;
+    margin-bottom: 1rem;
+  }
+  .baha-danmu-tool__field {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 240px;
+  }
+  .baha-danmu-tool__field--narrow {
+    flex: 0 0 140px;
+  }
+  .baha-danmu-tool__field span {
+    font-size: 0.85rem;
+    color: #333;
+    margin-bottom: 0.25rem;
+  }
+  .baha-danmu-tool__field input {
+    padding: 0.5rem 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  .baha-danmu-tool__field input:focus {
+    outline: none;
+    border-color: #19185d;
+    box-shadow: 0 0 0 3px rgba(25, 24, 93, 0.15);
+  }
+
+  .baha-danmu-tool__submit {
+    padding: 0.55rem 1.4rem;
+    background: #19185d;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    flex: 0 0 auto;
+  }
+  .baha-danmu-tool__submit:hover:not(:disabled) {
+    background: #2a2880;
+  }
+  .baha-danmu-tool__submit:disabled {
+    background: #999;
+    cursor: not-allowed;
+  }
+
+  .baha-danmu-tool__progress {
+    margin: 0.5rem 0;
+    color: #444;
+  }
+  #baha-status[data-status='error'] { color: #b00020; font-weight: bold; }
+  #baha-status[data-status='done']  { color: #1b6e1b; font-weight: bold; }
+
+  .baha-danmu-tool__error {
+    margin: 0.5rem 0;
+    padding: 0.6rem 0.8rem;
+    border-left: 4px solid #b00020;
+    background: #fbeaea;
+    color: #690012;
+  }
+
+  .baha-danmu-tool__download-row { margin: 1rem 0; }
+  .baha-danmu-tool__download {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: #1b6e1b;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  .baha-danmu-tool__download:hover { background: #258025; }
+
+  .baha-danmu-tool__notes {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+    font-size: 0.95rem;
+    color: #444;
+  }
+  .baha-danmu-tool__notes h2 {
+    font-size: 1.1rem;
+    margin: 0 0 0.5rem;
+  }
+  .baha-danmu-tool__notes code {
+    background: #f0f0f0;
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+    font-size: 0.9em;
+  }
+</style>

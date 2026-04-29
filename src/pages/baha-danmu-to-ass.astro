@@ -1,0 +1,36 @@
+---
+// /baha-danmu-to-ass/  —  feature page (NOT a content-collection entry).
+// TODO §13.6 finalization: wrap with BaseLayout once §8 is done. Until then
+// we ship a self-contained <html> shell so this page is independently
+// shippable and previewable. Per spec this page deliberately omits Giscus.
+import BahaDanmuTool from '../components/BahaDanmuTool.astro';
+
+const title = '巴哈動漫瘋彈幕轉 ASS 工具 - 柏狗屁世界';
+const description = '把巴哈動漫瘋的影片彈幕轉成 ASS 外掛字幕,搭配 PotPlayer / mpv 播放。';
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href="https://blog.bgpsekai.club/baha-danmu-to-ass/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content="https://blog.bgpsekai.club/baha-danmu-to-ass/" />
+
+    <!-- AdSense (GA4 / CF Web Analytics will be injected by BaseLayout in §8.2) -->
+    <script
+      is:inline
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9488921689181013"
+      crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <BahaDanmuTool />
+  </body>
+</html>

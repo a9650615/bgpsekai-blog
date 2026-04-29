@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh_tw">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>不負責教學 - 柏狗屁世界</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      /* This font-face is here to make icons work if the Ghost instance is installed in a subdirectory */
+      @font-face {
+        font-family: 'icomoon';
+        src: url("/assets/fonts/icomoon.eot?o5zacw?v=38c8b9183b");
+        src: url("/assets/fonts/icomoon.eot?o5zacw#iefix?v=38c8b9183b") format('embedded-opentype'),
+        url("/assets/fonts/icomoon.ttf?o5zacw?v=38c8b9183b") format('truetype'),
+        url("/assets/fonts/icomoon.woff?o5zacw?v=38c8b9183b") format('woff'),
+        url("/assets/fonts/icomoon.svg?o5zacw#icomoon?v=38c8b9183b") format('svg');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+    </style>
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css?v=38c8b9183b" media="screen" />
+
+    
+
+    <link rel="canonical" href="https://blog.bgpsekai.club/tag/tutorial/" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="next" href="https://blog.bgpsekai.club/tag/tutorial/page/2/" />
+    
+    <meta property="og:site_name" content="柏狗屁世界" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="不負責教學 - 柏狗屁世界" />
+    <meta property="og:description" content="紀錄前端、後端、以及一些日常生活，以及時不時開箱" />
+    <meta property="og:url" content="https://blog.bgpsekai.club/tag/tutorial/" />
+    <meta property="og:image" content="https://casper.ghost.org/v1.0.0/images/blog-cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="不負責教學 - 柏狗屁世界" />
+    <meta name="twitter:description" content="紀錄前端、後端、以及一些日常生活，以及時不時開箱" />
+    <meta name="twitter:url" content="https://blog.bgpsekai.club/tag/tutorial/" />
+    <meta name="twitter:image" content="https://casper.ghost.org/v1.0.0/images/blog-cover.jpg" />
+    <meta property="og:image:width" content="2000" />
+    <meta property="og:image:height" content="666" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Series",
+    "publisher": {
+        "@type": "Organization",
+        "name": "柏狗屁世界",
+        "url": "https://blog.bgpsekai.club/",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://blog.bgpsekai.club/content/images/2019/08/logo.png"
+        }
+    },
+    "url": "https://blog.bgpsekai.club/tag/tutorial/",
+    "name": "不負責教學",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.bgpsekai.club/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 4.9" />
+    <link rel="alternate" type="application/rss+xml" title="柏狗屁世界" href="https://blog.bgpsekai.club/rss/" />
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-51767762-4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-51767762-4');
+</script>
+<script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script><style>:root {--ghost-accent-color: #19185d;}</style>
+
+    <script>
+      // @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&dn=expat.txt Expat
+      const ghostHost = "https://blog.bgpsekai.club"
+      // @license-end
+    </script>
+
+    <script>
+      // @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&dn=expat.txt Expat
+      WebFontConfig = {
+        google: { families: ['Source+Sans+Pro:400,600,700&display=swap'] }
+      };
+
+      (function (d) {
+        var wf = d.createElement('script'), s = d.scripts[0];
+        wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
+        wf.async = true;
+        s.parentNode.insertBefore(wf, s);
+      })(document);
+      // @license-end
+    </script>
+  </head>
+  <body class="tag-template tag-tutorial">
+    
+
+<div class="main-wrap">
+    
+<header class="m-header  js-header">
+  <div class="m-mobile-topbar" data-aos="fade-down">
+    <button class="m-icon-button in-mobile-topbar js-open-menu" aria-label="Open menu">
+      <span class="icon-menu"></span>
+    </button>
+      <a href="https://blog.bgpsekai.club" class="m-logo in-mobile-topbar">
+        <img src="https://blog.bgpsekai.club/content/images/2019/08/logo.png" alt="柏狗屁世界">
+      </a>
+    <button class="m-icon-button in-mobile-topbar js-open-search" aria-label="Open search">
+      <span class="icon-search"></span>
+    </button>
+  </div>
+
+  <div class="m-menu js-menu">
+    <button class="m-icon-button outlined as-close-menu js-close-menu" aria-label="Close menu">
+      <span class="icon-close"></span>
+    </button>
+    <div class="m-menu__main" data-aos="fade-down">
+      <div class="l-wrapper">
+        <div class="m-nav">
+          <nav class="m-nav__left">
+            <ul role="submenu">
+                <li class="only-desktop" role="menuitem">
+                  <a href="https://blog.bgpsekai.club" class="m-logo">
+                    <img src="https://blog.bgpsekai.club/content/images/2019/08/logo.png" alt="柏狗屁世界">
+                  </a>
+                </li>
+                
+  <li class="nav-shou-ye">
+    <a href="https://blog.bgpsekai.club/">首頁</a>
+  </li>
+  <li class="nav-ba-ha-dan-mu-zhuan-ass">
+    <a href="https://blog.bgpsekai.club/baha-danmu-to-ass/">巴哈彈幕轉 ASS</a>
+  </li>
+
+              <li role="menuitem" class="js-submenu-option">
+                <button class="m-icon-button in-menu-main more js-toggle-submenu" aria-label="Toggle submenu">
+                  <span class="icon-more"></span>
+                </button>
+                <div class="m-submenu js-submenu">
+                  <div class="l-wrapper in-submenu">
+                    <section class="m-recent-articles">
+                      <h3 class="m-submenu-title in-recent-articles">Recent articles</h3>
+                      <div class="js-recent-articles">
+                            <div>
+                              <a href="/astone-ga50/" class="m-recent-article">
+                                <div class="m-recent-article__picture">
+                                    <div class="lozad" data-background-image="/content/images/size/w300/2023/09/REo3jt0.jpg"></div>
+                                </div>
+                                <h3 class="m-recent-article__title js-recent-article-title" title="[心得]ASTONE GA50手套">
+                                  [心得]ASTONE GA50手套
+                                </h3>
+                                <span class="m-recent-article__date">3 年前</span>
+                              </a>
+                            </div>
+                            <div>
+                              <a href="/cb300r-1000km-maintainance/" class="m-recent-article">
+                                <div class="m-recent-article__picture">
+                                    <div class="lozad" data-background-image="/content/images/size/w300/2023/02/20230108_135102.jpg"></div>
+                                </div>
+                                <h3 class="m-recent-article__title js-recent-article-title" title="[體驗] CB300R 1000 公里定保">
+                                  [體驗] CB300R 1000 公里定保
+                                </h3>
+                                <span class="m-recent-article__date">3 年前</span>
+                              </a>
+                            </div>
+                            <div>
+                              <a href="/astone-rt1500-vs-zeus-z3500/" class="m-recent-article">
+                                <div class="m-recent-article__picture">
+                                    <div class="lozad" data-background-image="/content/images/size/w300/2022/11/PXL_20220811_175704072.MP-COLLAGE-COLLAGE.jpg"></div>
+                                </div>
+                                <h3 class="m-recent-article__title js-recent-article-title" title="[心得]RT1500 vs z3500">
+                                  [心得]RT1500 vs z3500
+                                </h3>
+                                <span class="m-recent-article__date">3 年前</span>
+                              </a>
+                            </div>
+                            <div>
+                              <a href="/nuxt-server-side/" class="m-recent-article">
+                                <div class="m-recent-article__picture">
+                                    <div class="lozad" data-background-image="/content/images/size/w300/2022/05/---1.png"></div>
+                                </div>
+                                <h3 class="m-recent-article__title js-recent-article-title" title="Nuxt Server side rendering">
+                                  Nuxt Server side rendering
+                                </h3>
+                                <span class="m-recent-article__date">4 年前</span>
+                              </a>
+                            </div>
+                      </div>
+                    </section>
+                    <section class="m-tags">
+                      <h3 class="m-submenu-title">Tags</h3>
+                        <ul>
+                            <li>
+                              <a href="/tag/antec/">antec</a>
+                            </li>
+                            <li>
+                              <a href="/tag/apple/">apple</a>
+                            </li>
+                            <li>
+                              <a href="/tag/artso-clyin-yi-ban-gong-zhi-neng-yi/">artso CL銀翼辦公智能椅</a>
+                            </li>
+                            <li>
+                              <a href="/tag/backbone-bear/">backbone Bear</a>
+                            </li>
+                            <li>
+                              <a href="/tag/backbone-kabuto/">backbone Kabuto</a>
+                            </li>
+                            <li>
+                              <a href="/tag/backbone-kangaroo/">backbone Kangaroo</a>
+                            </li>
+                            <li>
+                              <a href="/tag/blog/">blog</a>
+                            </li>
+                            <li>
+                              <a href="/tag/chrome/">chrome</a>
+                            </li>
+                            <li>
+                              <a href="/tag/css/">css</a>
+                            </li>
+                            <li>
+                              <a href="/tag/cuh-7117/">CUH-7117</a>
+                            </li>
+                        </ul>
+                    </section>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </nav>
+          <div class="m-nav__right">
+            <button class="m-icon-button in-menu-main js-open-search" aria-label="Open search">
+              <span class="icon-search"></span>
+            </button>
+            <div class="m-toggle-darkmode js-tooltip" data-tippy-content="Toggle dark mode">
+              <input type="checkbox" class="js-toggle-darkmode">
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+    
+  <section class="m-hero no-picture " data-aos="fade">
+    <div class="m-hero__content" data-aos="fade-down">
+      <h1 class="m-hero-title bigger">不負責教學</h1>
+      <p class="m-heading__description">
+        14 posts with this tag
+      </p>
+    </div>
+    </section>
+  
+  <main>
+    <div class="l-content">
+      <div class="l-wrapper" data-aos="fade-up" data-aos-delay="300">
+        <div class="l-grid centered">
+          
+    <article class="m-article-card post tag-gong-ju tag-tutorial">
+      <div class="m-article-card__picture lozad" data-background-image="/content/images/size/w600/2021/07/-------2021-07-27-000653-1.png">
+      <a href="/open-heic-for-windows-copytransheic/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="https://blog.bgpsekai.club/author/a9650615/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by 鳥祐 ">
+          <div style="background-image: url(/content/images/size/w100/2020/04/gp4gesz.png);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="https://blog.bgpsekai.club/tag/gong-ju/" class="m-article-card__tag">工具</a>
+      <a href="/open-heic-for-windows-copytransheic/" class="m-article-card__info-link">
+        <div>
+          <h2 class="m-article-card__title js-article-card-title " title="如何在 Windows下開啟 HEIC 格式的相片 - copytransheic">
+            如何在 Windows下開啟 HEIC 格式的相片 - copytransheic
+          </h2>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>5 年前</span>
+          <span>&bull;</span>
+          <span>2 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    <article class="m-article-card post tag-ren-ti-gong-xue-yi tag-quan-gong-neng-wang-bu-ren-ti-gong-xue-yi tag-tutorial tag-e6-95-97-e5-ae-b6 tag-enjoy-121 tag-ergohuman-111 tag-ergoking tag-irocks-t05 tag-irocks-t05-plus tag-mesh-3-chair tag-mesh-chair">
+      <div class="m-article-card__picture lozad" data-background-image="/content/images/size/w600/2021/07/PXL_20210602_121015827-1.jpg">
+      <a href="/mesh3-fixed-handrail-experience/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="https://blog.bgpsekai.club/author/sheepdragon/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by sheepdragon ">
+          <div style="background-image: url(/assets/images/default-avatar-square-small.jpg?v=38c8b9183b);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="https://blog.bgpsekai.club/tag/ren-ti-gong-xue-yi/" class="m-article-card__tag">人體工學椅</a>
+      <a href="/mesh3-fixed-handrail-experience/" class="m-article-card__info-link">
+        <div>
+          <h2 class="m-article-card__title js-article-card-title " title="[維修]Mesh3華爾滋扶手改裝">
+            [維修]Mesh3華爾滋扶手改裝
+          </h2>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>5 年前</span>
+          <span>&bull;</span>
+          <span>3 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    <article class="m-article-card post tag-tutorial tag-keng tag-chrome">
+      <div class="m-article-card__picture lozad" data-background-image="/content/images/size/w600/2021/06/Swmy8Q2.png">
+      <a href="/cococut-extension/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="https://blog.bgpsekai.club/author/a9650615/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by 鳥祐 ">
+          <div style="background-image: url(/content/images/size/w100/2020/04/gp4gesz.png);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="https://blog.bgpsekai.club/tag/tutorial/" class="m-article-card__tag">不負責教學</a>
+      <a href="/cococut-extension/" class="m-article-card__info-link">
+        <div>
+          <h2 class="m-article-card__title js-article-card-title " title="[推薦] CocoCut 好用的網站影片打撈下載工具">
+            [推薦] CocoCut 好用的網站影片打撈下載工具
+          </h2>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>5 年前</span>
+          <span>&bull;</span>
+          <span>3 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    <article class="m-article-card post tag-problems tag-tutorial">
+      <div class="m-article-card__picture lozad" data-background-image="/content/images/size/w600/2020/12/-------2020-12-28-225037.png">
+      <a href="/b550_bluetooth_disappear/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="https://blog.bgpsekai.club/author/a9650615/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by 鳥祐 ">
+          <div style="background-image: url(/content/images/size/w100/2020/04/gp4gesz.png);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="https://blog.bgpsekai.club/tag/problems/" class="m-article-card__tag">一堆問題</a>
+      <a href="/b550_bluetooth_disappear/" class="m-article-card__info-link">
+        <div>
+          <h2 class="m-article-card__title js-article-card-title " title="解決 B550 系列主板藍芽消失">
+            解決 B550 系列主板藍芽消失
+          </h2>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>5 年前</span>
+          <span>&bull;</span>
+          <span>1 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    <article class="m-article-card post tag-tutorial tag-e6-95-97-e5-ae-b6 tag-antec tag-p110 tag-rgb tag-ji-ke tag-rgbgai-zhuang tag-deng-xiao-gai-zhuang">
+      <div class="m-article-card__picture lozad" data-background-image="/content/images/size/w600/2020/10/---10.jpg">
+      <a href="/antec-p110-luce-get-rgb-sync/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="https://blog.bgpsekai.club/author/sheepdragon/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by sheepdragon ">
+          <div style="background-image: url(/assets/images/default-avatar-square-small.jpg?v=38c8b9183b);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="https://blog.bgpsekai.club/tag/tutorial/" class="m-article-card__tag">不負責教學</a>
+      <a href="/antec-p110-luce-get-rgb-sync/" class="m-article-card__info-link">
+        <div>
+          <h2 class="m-article-card__title js-article-card-title " title="[維修]Antec P110 Luce 改裝RGB同步和LED鍵">
+            [維修]Antec P110 Luce 改裝RGB同步和LED鍵
+          </h2>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>6 年前</span>
+          <span>&bull;</span>
+          <span>2 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    <article class="m-article-card post tag-tutorial tag-apple">
+      <div class="m-article-card__picture lozad" data-background-image="/content/images/size/w600/2020/06/buy_apple_store_jp_failure.png">
+      <a href="/itunes-jp-pay-method/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="https://blog.bgpsekai.club/author/a9650615/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by 鳥祐 ">
+          <div style="background-image: url(/content/images/size/w100/2020/04/gp4gesz.png);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="https://blog.bgpsekai.club/tag/tutorial/" class="m-article-card__tag">不負責教學</a>
+      <a href="/itunes-jp-pay-method/" class="m-article-card__info-link">
+        <div>
+          <h2 class="m-article-card__title js-article-card-title " title="購買 Apple Store 日區付款方法">
+            購買 Apple Store 日區付款方法
+          </h2>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>6 年前</span>
+          <span>&bull;</span>
+          <span>2 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    <article class="m-article-card post tag-tutorial tag-xiao-mi-gua-hu-dao tag-wei-xiu-xiao-mi-gua-hu-dao tag-xiao-mi-gua-hu-dao-wu-fa-chong-dian tag-wu-fa-chong-dian">
+      <div class="m-article-card__picture lozad" data-background-image="/content/images/size/w600/2020/04/---7.jpg">
+      <a href="/xiao-mi-gua-hu-dao/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="https://blog.bgpsekai.club/author/sheepdragon/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by sheepdragon ">
+          <div style="background-image: url(/assets/images/default-avatar-square-small.jpg?v=38c8b9183b);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="https://blog.bgpsekai.club/tag/tutorial/" class="m-article-card__tag">不負責教學</a>
+      <a href="/xiao-mi-gua-hu-dao/" class="m-article-card__info-link">
+        <div>
+          <h2 class="m-article-card__title js-article-card-title " title="[維修]小米刮鬍刀無法充電">
+            [維修]小米刮鬍刀無法充電
+          </h2>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>6 年前</span>
+          <span>&bull;</span>
+          <span>2 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    <article class="m-article-card post tag-blog tag-tutorial">
+      <div class="m-article-card__picture lozad" data-background-image="/content/images/size/w600/2020/04/---2020-04-13---1.42.45.png">
+      <a href="/connect-my-blog-to-liker/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="https://blog.bgpsekai.club/author/a9650615/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by 鳥祐 ">
+          <div style="background-image: url(/content/images/size/w100/2020/04/gp4gesz.png);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="https://blog.bgpsekai.club/tag/blog/" class="m-article-card__tag">blog</a>
+      <a href="/connect-my-blog-to-liker/" class="m-article-card__info-link">
+        <div>
+          <h2 class="m-article-card__title js-article-card-title " title="Liker - 讚賞公民 的發現及 Ghost 串接之旅">
+            Liker - 讚賞公民 的發現及 Ghost 串接之旅
+          </h2>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>6 年前</span>
+          <span>&bull;</span>
+          <span>2 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    <article class="m-article-card post tag-tutorial tag-e5-8b-95-e6-bc-ab-e7-98-8b tag-e5-b7-b4-e5-93-88 tag-e6-87-b6-e4-ba-ba-e5-8c-85">
+      <div class="m-article-card__picture lozad" data-background-image="/content/images/size/w600/2019/09/9f7b1387-ce0c-4765-8c02-10d12a4c41f0-1.jpg">
+      <a href="/bahamut-anime-get-m3u8-updated/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="https://blog.bgpsekai.club/author/sheepdragon/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by sheepdragon ">
+          <div style="background-image: url(/assets/images/default-avatar-square-small.jpg?v=38c8b9183b);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="https://blog.bgpsekai.club/tag/tutorial/" class="m-article-card__tag">不負責教學</a>
+      <a href="/bahamut-anime-get-m3u8-updated/" class="m-article-card__info-link">
+        <div>
+          <h2 class="m-article-card__title js-article-card-title " title="巴哈動畫瘋 跳過網站直抓 m3u8 (更新版">
+            巴哈動畫瘋 跳過網站直抓 m3u8 (更新版
+          </h2>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>9 年前</span>
+          <span>&bull;</span>
+          <span>2 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+    <article class="m-article-card no-picture post tag-nodejs tag-tutorial no-image">
+      <div class="m-article-card__picture">
+      <a href="/http2-with-nodejs-express--e2-89-92--e6-87-b6-e4-ba-ba-e5-8c-85/" class="m-article-card__picture-link" aria-label="Article"></a>
+      <a href="https://blog.bgpsekai.club/author/a7612626/" class="m-article-card__author js-tooltip" aria-label="Authors" data-tippy-content="Posted by a7612626 ">
+          <div style="background-image: url(/assets/images/default-avatar-square-small.jpg?v=38c8b9183b);"></div>
+      </a>
+    </div>
+      <div class="m-article-card__info">
+        <a href="https://blog.bgpsekai.club/tag/nodejs/" class="m-article-card__tag">nodejs</a>
+      <a href="/http2-with-nodejs-express--e2-89-92--e6-87-b6-e4-ba-ba-e5-8c-85/" class="m-article-card__info-link">
+        <div>
+          <h2 class="m-article-card__title js-article-card-title js-article-card-title-no-image" title="HTTP/2 with NODEJS EXPRESS ≒ 懶人包">
+            HTTP/2 with NODEJS EXPRESS ≒ 懶人包
+          </h2>
+        </div>
+        <div class="m-article-card__timestamp">
+          <span>10 年前</span>
+          <span>&bull;</span>
+          <span>3 min read</span>
+        </div>
+      </a>
+    </div>
+  </article>
+        </div>
+      </div>
+      
+<div class="l-wrapper">
+  <nav class="m-pagination">
+    <span class="m-pagination__text">Page 1 of 2</span>
+      <a href="/tag/tutorial/page/2/" class="m-icon-button filled in-pagination-right" aria-label="Older posts">
+        <span class="icon-arrow-right"></span>
+      </a>
+  </nav>
+</div>
+
+    </div>
+  </main>
+</div>
+
+
+    
+<div class="m-search js-search">
+  <button class="m-icon-button outlined as-close-search js-close-search" aria-label="Close search">
+    <span class="icon-close"></span>
+  </button>
+  <div class="m-search__content">
+    <form class="m-search__form">
+      <fieldset>
+        <span class="icon-search m-search-icon"></span>
+        <input type="text" class="m-input in-search js-input-search" placeholder="Type to search" aria-label="Type to search">
+      </fieldset>
+    </form>
+    <div class="js-search-results hide"></div>
+    <p class="m-not-found align-center hide js-no-results">
+      No results for your search, please try with something else.
+    </p>
+  </div>
+</div>
+
+    
+<footer class="m-footer">
+  <div class="m-footer__content">
+    <p class="m-footer-copyright">
+      <span>柏狗屁世界 &copy; 2026</span>
+      <span>&nbsp; &bull; &nbsp;</span>
+      <span>Published with <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a></span>
+    </p>
+
+    <nav class="m-footer-social">
+    </nav>
+    <p class="m-footer-copyright jslicense">
+      <a href="/assets/html/javascript.html?v=38c8b9183b" rel="jslicense">JavaScript license information</a>
+    </p>
+  </div>
+</footer>
+
+    <div class="m-alert success subscribe js-alert" data-notification="subscribe">
+  Great! You&#x27;ve successfully subscribed.
+  <button class="m-alert__close js-notification-close" aria-label="Close">
+    <span class="icon-close"></span>
+  </button>
+</div>
+
+<div class="m-alert success signup js-alert" data-notification="signup">
+  Great! Next, complete checkout for full access.
+  <button class="m-alert__close js-notification-close" aria-label="Close">
+    <span class="icon-close"></span>
+  </button>
+</div>
+
+<div class="m-alert success signin js-alert" data-notification="signin">
+  Welcome back! You&#x27;ve successfully signed in.
+  <button class="m-alert__close js-notification-close" aria-label="Close">
+    <span class="icon-close"></span>
+  </button>
+</div>
+
+<div class="m-alert success checkout js-alert" data-notification="checkout">
+  Success! Your account is fully activated, you now have access to all content.
+  <button class="m-alert__close js-notification-close" aria-label="Close">
+    <span class="icon-close"></span>
+  </button>
+</div>
+    <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=IntersectionObserver%2CPromise%2CArray.prototype.includes%2CString.prototype.endsWith%2CString.prototype.startsWith%2CObject.assign%2CNodeList.prototype.forEach"></script>
+    <script defer src="https://unpkg.com/@tryghost/content-api@1.2.7/umd/content-api.min.js"></script>
+    <script defer src="/assets/js/manifest.js?v=38c8b9183b"></script>
+    <script defer src="/assets/js/vendor.js?v=38c8b9183b"></script>
+    <script defer src="/assets/js/app.js?v=38c8b9183b"></script>
+
+    
+
+    <script data-ad-client="ca-pub-9488921689181013" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  </body>
+</html>
