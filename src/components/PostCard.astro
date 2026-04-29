@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'posts'>;
+}
+
+const { entry } = Astro.props;
+const { title, pubDate, author, excerpt, featureImage } = entry.data;
+// `entry.slug` is Astro 5 type:'content' canonical slug — see config.ts note.
+const href = `/${entry.slug}/`;
+
+const dateStr = pubDate.toLocaleDateString('zh-TW', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+// Reading time — Chinese-leaning heuristic. body() isn't available here without
+// rendering; estimate from excerpt length when available, otherwise fallback.
+const charCount = (excerpt ?? title).length;
+const readingTime = Math.max(1, Math.ceil(charCount / 500));
+---
+
+<article class="post-card">
+  <a href={href} class="post-card__link" aria-label={title}>
+    {featureImage && typeof featureImage !== 'string' && (
+      <div class="post-card__media">
+        <Image
+          src={featureImage}
+          alt=""
+          width={600}
+          height={338}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    )}
+    <div class="post-card__body">
+      <h2 class="post-card__title">{title}</h2>
+      {excerpt && <p class="post-card__excerpt">{excerpt}</p>}
+      <div class="post-card__meta">
+        <span class="post-card__author">{author}</span>
+        <span class="post-card__sep">•</span>
+        <time datetime={pubDate.toISOString()}>{dateStr}</time>
+        <span class="post-card__sep">•</span>
+        <span>{readingTime} min read</span>
+      </div>
+    </div>
+  </a>
+</article>

@@ -1,0 +1,52 @@
+---
+// /page/N/ — paginated post listing for N >= 2.
+//
+// Page 1 is served by `src/pages/index.astro`; we deliberately do NOT emit
+// /page/1/ here so there's a single canonical URL for the first page.
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import Pagination from '../../components/Pagination.astro';
+
+export const getStaticPaths = (async () => {
+  const POSTS_PER_PAGE = 10;
+  const all = (await getCollection('posts')).sort(
+    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+  );
+  const totalPages = Math.max(1, Math.ceil(all.length / POSTS_PER_PAGE));
+  // Skip page 1 — owned by /index.astro.
+  const paths = [] as Array<{
+    params: { page: string };
+    props: { posts: typeof all; currentPage: number; totalPages: number };
+  }>;
+  for (let n = 2; n <= totalPages; n++) {
+    const start = (n - 1) * POSTS_PER_PAGE;
+    paths.push({
+      params: { page: String(n) },
+      props: {
+        posts: all.slice(start, start + POSTS_PER_PAGE),
+        currentPage: n,
+        totalPages,
+      },
+    });
+  }
+  return paths;
+}) satisfies GetStaticPaths;
+
+const { posts, currentPage, totalPages } = Astro.props;
+---
+
+<BaseLayout
+  title={`第 ${currentPage} 頁 - 柏狗屁世界`}
+  description="柏狗屁世界 — 雜談與筆記。"
+  canonicalPath={`/page/${currentPage}/`}
+  ogType="website"
+>
+  <div class="l-wrap">
+    <section class="post-grid">
+      {posts.map((post) => <PostCard entry={post} />)}
+    </section>
+    <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/" />
+  </div>
+</BaseLayout>

@@ -1,0 +1,90 @@
+---
+// /tag/<slug>/page/N/ — tag index, pages 2..N.
+//
+// Page 1 is owned by tag/[slug]/index.astro; we only emit N >= 2 here.
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import PostCard from '../../../../components/PostCard.astro';
+import Pagination from '../../../../components/Pagination.astro';
+import tagsData from '../../../../data/tags.json';
+
+interface TagRecord {
+  slug: string;
+  originalSlug: string;
+  name: string;
+  description?: string;
+}
+
+export const getStaticPaths = (async () => {
+  const POSTS_PER_PAGE = 10;
+  const tags = tagsData as TagRecord[];
+  const allPosts = (await getCollection('posts')).sort(
+    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+  );
+  const paths: Array<{
+    params: { slug: string; page: string };
+    props: {
+      tag: TagRecord;
+      posts: typeof allPosts;
+      currentPage: number;
+      totalPages: number;
+    };
+  }> = [];
+  for (const tag of tags) {
+    const posts = allPosts.filter((p) => p.data.tags.includes(tag.slug));
+    if (posts.length <= POSTS_PER_PAGE) continue;
+    const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+    for (let n = 2; n <= totalPages; n++) {
+      const start = (n - 1) * POSTS_PER_PAGE;
+      paths.push({
+        params: { slug: tag.slug, page: String(n) },
+        props: {
+          tag,
+          posts: posts.slice(start, start + POSTS_PER_PAGE),
+          currentPage: n,
+          totalPages,
+        },
+      });
+    }
+  }
+  return paths;
+}) satisfies GetStaticPaths;
+
+const { tag, posts, currentPage, totalPages } = Astro.props;
+---
+
+<BaseLayout
+  title={`標籤:${tag.name} - 第 ${currentPage} 頁 - 柏狗屁世界`}
+  description={tag.description ?? `所有「${tag.name}」相關文章。`}
+  canonicalPath={`/tag/${tag.slug}/page/${currentPage}/`}
+  ogType="website"
+>
+  <div class="l-wrap">
+    <header class="tag-page__header">
+      <h1 class="tag-page__title">{tag.name}</h1>
+      {tag.description && <p class="tag-page__desc">{tag.description}</p>}
+    </header>
+    <section class="post-grid">
+      {posts.map((p) => <PostCard entry={p} />)}
+    </section>
+    <Pagination
+      currentPage={currentPage}
+      totalPages={totalPages}
+      basePath={`/tag/${tag.slug}/`}
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .tag-page__header {
+    padding: 2rem 0 0.5rem;
+  }
+  .tag-page__title {
+    margin: 0 0 0.25rem;
+  }
+  .tag-page__desc {
+    color: var(--fg-muted, #666);
+    margin: 0;
+  }
+</style>

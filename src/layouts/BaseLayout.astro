@@ -1,0 +1,129 @@
+---
+// BaseLayout — site-wide HTML shell.
+//
+// Per spec (`url-and-integrations`):
+//   * Always inject AdSense `ca-pub-9488921689181013` in <head>.
+//   * GA4 conditional on `PUBLIC_GA4_MEASUREMENT_ID` (build does not fail when
+//     unset; §9.3 will tighten this once the ID is provisioned).
+//   * Never inject GA Universal `UA-51767762-4`, `<amp-*>`, or
+//     `cdn.ampproject.org`.
+//   * Cloudflare Web Analytics is Phase 2 — not injected here.
+//   * Pagefind UI css comes via the <Search/> island that owns it; we don't
+//     duplicate the link here.
+//
+// Per `blog-rendering` "Casper-ish layout fidelity": header on every route
+// shows site title + nav, footer carries copyright + RSS link.
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Giscus from '../components/Giscus.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonicalPath?: string;
+  featureImage?: ImageMetadata | string;
+  ogType?: 'website' | 'article';
+  publishDate?: Date;
+  showGiscus?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonicalPath,
+  featureImage,
+  ogType = 'website',
+  publishDate,
+  showGiscus = false,
+} = Astro.props;
+
+const siteOrigin = Astro.site?.toString().replace(/\/$/, '') ?? 'https://blog.bgpsekai.club';
+const path = canonicalPath ?? Astro.url.pathname;
+const canonicalUrl = `${siteOrigin}${path}`;
+
+function resolveOgImage(img: ImageMetadata | string | undefined): string | undefined {
+  if (!img) return undefined;
+  if (typeof img === 'string') {
+    return img.startsWith('http') ? img : `${siteOrigin}${img.startsWith('/') ? '' : '/'}${img}`;
+  }
+  // ImageMetadata: src is a build-time path beginning with `/`.
+  return `${siteOrigin}${img.src}`;
+}
+const ogImage = resolveOgImage(featureImage);
+
+// GA4 — only inject when the env var is provided (avoids breaking builds in
+// development before the GA property is created). The §9.3 task will switch to
+// a hard fail once `PUBLIC_GA4_MEASUREMENT_ID` is wired in CI.
+const ga4Id = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID as string | undefined;
+
+// Inline SVG favicon — original Ghost theme used `/favicon.ico` but we never
+// imported one. A small data-URI puppy emoji keeps this self-contained until a
+// proper asset is added.
+const faviconSvg =
+  'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐶</text></svg>';
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href={faviconSvg} />
+
+    <meta property="og:site_name" content="柏狗屁世界" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonicalUrl} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogType === 'article' && publishDate && (
+      <meta property="article:published_time" content={publishDate.toISOString()} />
+    )}
+
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="柏狗屁世界"
+      href={`${siteOrigin}/rss.xml`}
+    />
+
+    <!-- AdSense -->
+    <script
+      is:inline
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9488921689181013"
+      crossorigin="anonymous"></script>
+
+    {ga4Id && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`} />
+        <script is:inline define:vars={{ ga4Id }}>
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', ga4Id);`}
+        </script>
+      </>
+    )}
+
+    <slot name="head" />
+  </head>
+  <body>
+    <Header />
+    <main class="site-main">
+      <slot />
+    </main>
+    <Footer />
+    {showGiscus && <Giscus enabled={true} />}
+  </body>
+</html>

@@ -1,0 +1,85 @@
+---
+// /author/<slug>/ — author index page.
+//
+// Spec ref: blog-rendering "Tag and author indexes":
+//   * authors with zero posts → 404 (we emit no path for them).
+//   * posts ordered by pubDate descending.
+//
+// Author list is read directly from `import-cache/authors.json` (the
+// source-of-truth Ghost snapshot). 3 authors, max 37 posts → no pagination
+// needed. Posts list `entry.data.author` already matches the slug, since the
+// transform step writes Ghost's primary-author slug there.
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostCard from '../../../components/PostCard.astro';
+import authorsRaw from '../../../../import-cache/authors.json';
+
+interface AuthorRecord {
+  id: string;
+  name: string;
+  slug: string;
+  bio: string | null;
+  profile_image: string | null;
+  count?: { posts: number };
+}
+
+export const getStaticPaths = (async () => {
+  const authors = authorsRaw as AuthorRecord[];
+  const allPosts = (await getCollection('posts')).sort(
+    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+  );
+  return authors
+    .map((author) => {
+      const posts = allPosts.filter((p) => p.data.author === author.slug);
+      if (posts.length === 0) return null;
+      return {
+        params: { slug: author.slug },
+        props: { author, posts },
+      };
+    })
+    .filter((x): x is NonNullable<typeof x> => x !== null);
+}) satisfies GetStaticPaths;
+
+const { author, posts } = Astro.props;
+// Ghost stores empty-ish bios as the literal string "0" (see authors.json).
+const showBio =
+  author.bio && author.bio.trim() !== '' && author.bio.trim() !== '0';
+---
+
+<BaseLayout
+  title={`作者:${author.name} - 柏狗屁世界`}
+  description={showBio ? author.bio! : `${author.name} 的文章。`}
+  canonicalPath={`/author/${author.slug}/`}
+  ogType="website"
+>
+  <div class="l-wrap">
+    <header class="author-page__header">
+      <h1 class="author-page__name">{author.name}</h1>
+      {showBio && <p class="author-page__bio">{author.bio}</p>}
+      <p class="author-page__count">共 {posts.length} 篇文章</p>
+    </header>
+    <section class="post-grid">
+      {posts.map((p) => <PostCard entry={p} />)}
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .author-page__header {
+    padding: 2rem 0 0.5rem;
+  }
+  .author-page__name {
+    margin: 0 0 0.5rem;
+  }
+  .author-page__bio {
+    color: var(--fg-muted, #555);
+    margin: 0 0 0.5rem;
+    white-space: pre-line;
+  }
+  .author-page__count {
+    color: var(--fg-muted, #888);
+    font-size: 0.9em;
+    margin: 0;
+  }
+</style>

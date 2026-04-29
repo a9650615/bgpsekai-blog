@@ -1,0 +1,16 @@
+---
+// Site footer. Marked `data-pagefind-ignore` so the copyright + RSS link don't
+// pollute search snippets.
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer" data-pagefind-ignore>
+  <div class="site-footer__inner">
+    <p class="site-footer__copy">
+      © 2014–{year} 柏狗屁世界
+    </p>
+    <nav class="site-footer__links" aria-label="footer">
+      <a href="/rss.xml" type="application/rss+xml">RSS</a>
+    </nav>
+  </div>
+</footer>

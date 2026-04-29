@@ -1,0 +1,120 @@
+---
+// Pagination — list-page nav for paginated indexes (home, /page/N/, tag, ...).
+//
+// `basePath` must end with a trailing slash, e.g. `/`, `/tag/foo/`. Page 1
+// resolves to `basePath`; pages 2..N to `${basePath}page/N/`.
+//
+// We render: prev link · 1 2 3 ... N · next link, with simple ellipsis when
+// the page count is large.
+
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  basePath: string;
+}
+
+const { currentPage, totalPages, basePath } = Astro.props;
+
+function pageHref(n: number): string {
+  if (n <= 1) return basePath;
+  return `${basePath}page/${n}/`;
+}
+
+const prev = currentPage > 1 ? pageHref(currentPage - 1) : null;
+const next = currentPage < totalPages ? pageHref(currentPage + 1) : null;
+
+// Build page-number list with simple ellipsis (window of 1 around current,
+// always include 1 and totalPages).
+function buildList(current: number, total: number): Array<number | '…'> {
+  if (total <= 7) {
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+  const set = new Set<number>([1, total, current - 1, current, current + 1]);
+  const sorted = [...set].filter((n) => n >= 1 && n <= total).sort((a, b) => a - b);
+  const out: Array<number | '…'> = [];
+  for (let i = 0; i < sorted.length; i++) {
+    out.push(sorted[i]);
+    if (i < sorted.length - 1 && sorted[i + 1] - sorted[i] > 1) {
+      out.push('…');
+    }
+  }
+  return out;
+}
+
+const items = totalPages > 1 ? buildList(currentPage, totalPages) : [];
+---
+
+{totalPages > 1 && (
+  <nav class="pagination" aria-label="分頁">
+    {prev ? (
+      <a class="pagination__prev" href={prev} rel="prev">← 上一頁</a>
+    ) : (
+      <span class="pagination__prev pagination__prev--disabled" aria-disabled="true">← 上一頁</span>
+    )}
+
+    <ul class="pagination__pages">
+      {items.map((it) =>
+        it === '…' ? (
+          <li class="pagination__ellipsis" aria-hidden="true">…</li>
+        ) : it === currentPage ? (
+          <li class="pagination__page pagination__page--current" aria-current="page">{it}</li>
+        ) : (
+          <li class="pagination__page">
+            <a href={pageHref(it)}>{it}</a>
+          </li>
+        )
+      )}
+    </ul>
+
+    {next ? (
+      <a class="pagination__next" href={next} rel="next">下一頁 →</a>
+    ) : (
+      <span class="pagination__next pagination__next--disabled" aria-disabled="true">下一頁 →</span>
+    )}
+  </nav>
+)}
+
+<style>
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem 0;
+    flex-wrap: wrap;
+  }
+  .pagination__pages {
+    display: flex;
+    gap: 0.4rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+  .pagination__page,
+  .pagination__ellipsis {
+    min-width: 2rem;
+    text-align: center;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+  }
+  .pagination__page a {
+    display: inline-block;
+    padding: 0 0.25rem;
+  }
+  .pagination__page--current {
+    background: var(--accent, #19185d);
+    color: #fff;
+  }
+  .pagination__prev,
+  .pagination__next {
+    text-decoration: none;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+  }
+  .pagination__prev--disabled,
+  .pagination__next--disabled {
+    color: var(--fg-muted, #888);
+    cursor: not-allowed;
+  }
+</style>

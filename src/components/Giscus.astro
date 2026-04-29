@@ -1,0 +1,45 @@
+---
+// Giscus comments widget. Per spec only enabled on post pages (and never on
+// home / tag / author / about-me / baha-danmu-to-ass).
+//
+// TODO §9.4: replace placeholder `data-repo-id` / `data-category-id` with real
+// values once the Astro repo is pushed to GitHub and registered with Giscus.
+// Until then we render the script tag with placeholders so the markup is
+// production-shaped but it will simply not render comments.
+
+interface Props {
+  enabled?: boolean;
+}
+
+const { enabled = false } = Astro.props;
+
+const config = {
+  repo: 'MingYou/blog',
+  repoId: 'TODO_GISCUS_REPO_ID',
+  category: 'Announcements',
+  categoryId: 'TODO_GISCUS_CATEGORY_ID',
+};
+---
+
+{enabled && (
+  <section class="giscus-wrapper" aria-label="留言">
+    <div class="giscus" data-pagefind-ignore></div>
+    <script
+      is:inline
+      src="https://giscus.app/client.js"
+      data-repo={config.repo}
+      data-repo-id={config.repoId}
+      data-category={config.category}
+      data-category-id={config.categoryId}
+      data-mapping="pathname"
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="bottom"
+      data-theme="preferred_color_scheme"
+      data-lang="zh-TW"
+      data-loading="lazy"
+      crossorigin="anonymous"
+      async></script>
+  </section>
+)}

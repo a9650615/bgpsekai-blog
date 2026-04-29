@@ -1,0 +1,41 @@
+---
+// Site header.
+//
+// Marked entirely with `data-pagefind-ignore` so navigation labels and the
+// search box itself never appear inside Pagefind result snippets (per
+// `url-and-integrations` Pagefind requirement).
+import Search from 'astro-pagefind/components/Search';
+
+const navItems: Array<{ href: string; label: string }> = [
+  { href: '/', label: '首頁' },
+  { href: '/baha-danmu-to-ass/', label: '巴哈彈幕轉 ASS' },
+];
+
+const currentPath = Astro.url.pathname;
+function isCurrent(href: string): boolean {
+  if (href === '/') return currentPath === '/' || currentPath === '';
+  return currentPath === href || currentPath === href.replace(/\/$/, '');
+}
+---
+
+<header class="site-header" data-pagefind-ignore>
+  <div class="site-header__inner">
+    <a href="/" class="site-header__brand" aria-label="柏狗屁世界 — 回首頁">
+      <span class="site-header__title">柏狗屁世界</span>
+    </a>
+
+    <nav class="site-header__nav" aria-label="主要導覽">
+      <ul>
+        {navItems.map((item) => (
+          <li class:list={[{ 'is-current': isCurrent(item.href) }]}>
+            <a href={item.href}>{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="site-header__search">
+      <Search id="site-search" className="pagefind-ui--header" />
+    </div>
+  </div>
+</header>
