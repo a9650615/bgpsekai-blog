@@ -10,6 +10,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PostCard from '../../../components/PostCard.astro';
 import Pagination from '../../../components/Pagination.astro';
 import tagsData from '../../../data/tags.json';
+import { url } from '../../../utils/url.ts';
 
 interface TagRecord {
   slug: string;
@@ -58,7 +59,7 @@ const { tag, posts, totalPages } = Astro.props;
     <section class="post-grid">
       {posts.map((p) => <PostCard entry={p} />)}
     </section>
-    <Pagination currentPage={1} totalPages={totalPages} basePath={`/tag/${tag.slug}/`} />
+    <Pagination currentPage={1} totalPages={totalPages} basePath={url(`/tag/${tag.slug}/`)} />
   </div>
 </BaseLayout>
 

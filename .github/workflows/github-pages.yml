@@ -1,0 +1,61 @@
+# GitHub Pages preview deployment.
+#
+# This workflow exists ONLY as a transitional preview for the Astro migration —
+# the production target is Cloudflare Pages (see deploy.yml). Two important
+# differences between the GH Pages preview and the eventual CF Pages prod:
+#
+#   * `_redirects` is NOT honoured by GitHub Pages. The 26 rules in
+#     public/_redirects (16 hex→pinyin tag 301s, 5 WP residue 301s, 1 RSS
+#     alias 301, 4 Ghost-only 410 splats) will all return 404 here. Once CF
+#     Pages is live they will start working again.
+#   * No GA4 / no CF Web Analytics — preview is intentionally untracked, so
+#     the workflow does not pass `PUBLIC_GA4_MEASUREMENT_ID`. BaseLayout
+#     handles the missing env gracefully (skips gtag injection).
+#
+# The build is parameterised via env: setting `SITE_URL` and `BASE_PATH`
+# overrides the defaults in astro.config.mjs (which target CF Pages root).
+
+name: GitHub Pages preview
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build Astro site for /bgpsekai-blog/ subpath
+        run: npm run build
+        env:
+          SITE_URL: https://a9650615.github.io
+          BASE_PATH: /bgpsekai-blog/
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

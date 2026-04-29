@@ -131,6 +131,12 @@ GHOST_ADMIN_KEY=<keyId>:<secret>
 
 Phase 2 才需要:`PUBLIC_CF_BEACON_TOKEN`(Cloudflare Web Analytics)。
 
+過渡期還有一個 **GitHub Pages preview**(`.github/workflows/github-pages.yml`)
+部署到 `https://a9650615.github.io/bgpsekai-blog/`,build 時透過
+`SITE_URL` / `BASE_PATH` env 把站台搬到子路徑。**注意**:GitHub Pages 不
+支援 `_redirects`,所以 16 個 hex→pinyin tag、5 個 WP residue、RSS alias、
+Ghost-only 410 全部在預覽站不會運作 — 那些只在 CF Pages 上線後才生效。
+
 ## 整合
 
 | 服務 | 設定方式 |

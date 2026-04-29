@@ -11,6 +11,7 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostMeta from '../components/PostMeta.astro';
+import { url } from '../utils/url.ts';
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection('posts');
@@ -77,13 +78,13 @@ const pageDescription = metaDescription ?? excerpt;
 
     <nav class="post-page__nav" aria-label="文章導覽">
       {older ? (
-        <a class="post-page__nav-link post-page__nav-link--older" href={`/${older.slug}/`}>
+        <a class="post-page__nav-link post-page__nav-link--older" href={url(`/${older.slug}/`)}>
           <span class="post-page__nav-label">← 較舊文章</span>
           <span class="post-page__nav-title">{older.data.title}</span>
         </a>
       ) : <span />}
       {newer ? (
-        <a class="post-page__nav-link post-page__nav-link--newer" href={`/${newer.slug}/`}>
+        <a class="post-page__nav-link post-page__nav-link--newer" href={url(`/${newer.slug}/`)}>
           <span class="post-page__nav-label">較新文章 →</span>
           <span class="post-page__nav-title">{newer.data.title}</span>
         </a>

@@ -4,6 +4,7 @@
 // Static 404 page; Cloudflare Pages serves this for unmatched URLs.
 // Pagefind UI in the header is also available for users to recover.
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../utils/url.ts';
 ---
 
 <BaseLayout
@@ -17,7 +18,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <h1 class="notfound__title">404</h1>
     <p class="notfound__msg">這裡沒有東西。也許頁面已被搬走、刪除,或者你輸錯網址了。</p>
     <p class="notfound__actions">
-      <a class="notfound__link" href="/">回首頁</a>
+      <a class="notfound__link" href={url('/')}>回首頁</a>
     </p>
     <p class="notfound__hint">
       你也可以使用頁首的搜尋框找找看。

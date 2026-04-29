@@ -8,6 +8,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/PostCard.astro';
 import Pagination from '../../components/Pagination.astro';
+import { url } from '../../utils/url.ts';
 
 export const getStaticPaths = (async () => {
   const POSTS_PER_PAGE = 10;
@@ -47,6 +48,6 @@ const { posts, currentPage, totalPages } = Astro.props;
     <section class="post-grid">
       {posts.map((post) => <PostCard entry={post} />)}
     </section>
-    <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/" />
+    <Pagination currentPage={currentPage} totalPages={totalPages} basePath={url('/')} />
   </div>
 </BaseLayout>

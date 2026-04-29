@@ -4,23 +4,32 @@
 // Marked entirely with `data-pagefind-ignore` so navigation labels and the
 // search box itself never appear inside Pagefind result snippets (per
 // `url-and-integrations` Pagefind requirement).
+//
+// All in-site `<a href>`s flow through `url()` so the deploy base
+// (`/bgpsekai-blog/` on GH Pages, `/` on CF Pages) gets prepended.
 import Search from 'astro-pagefind/components/Search';
+import { url } from '../utils/url.ts';
 
 const navItems: Array<{ href: string; label: string }> = [
   { href: '/', label: '首頁' },
   { href: '/baha-danmu-to-ass/', label: '巴哈彈幕轉 ASS' },
 ];
 
+// Astro.url.pathname already includes the base, so we compare against
+// `url(item.href)` rather than the raw href.
 const currentPath = Astro.url.pathname;
 function isCurrent(href: string): boolean {
-  if (href === '/') return currentPath === '/' || currentPath === '';
-  return currentPath === href || currentPath === href.replace(/\/$/, '');
+  const target = url(href);
+  if (href === '/') {
+    return currentPath === target || currentPath === target.replace(/\/$/, '');
+  }
+  return currentPath === target || currentPath === target.replace(/\/$/, '');
 }
 ---
 
 <header class="site-header" data-pagefind-ignore>
   <div class="site-header__inner">
-    <a href="/" class="site-header__brand" aria-label="柏狗屁世界 — 回首頁">
+    <a href={url('/')} class="site-header__brand" aria-label="柏狗屁世界 — 回首頁">
       <span class="site-header__title">柏狗屁世界</span>
     </a>
 
@@ -28,7 +37,7 @@ function isCurrent(href: string): boolean {
       <ul>
         {navItems.map((item) => (
           <li class:list={[{ 'is-current': isCurrent(item.href) }]}>
-            <a href={item.href}>{item.label}</a>
+            <a href={url(item.href)}>{item.label}</a>
           </li>
         ))}
       </ul>

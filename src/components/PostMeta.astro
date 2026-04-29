@@ -1,5 +1,6 @@
 ---
 import tagsData from '../data/tags.json';
+import { url } from '../utils/url.ts';
 
 interface TagRecord {
   slug: string;
@@ -33,7 +34,7 @@ const readingTime = charCount ? Math.max(1, Math.ceil(charCount / 500)) : null;
 
 <div class="post-meta">
   <div class="post-meta__byline">
-    <a class="post-meta__author" href={`/author/${author}/`} rel="author">{author}</a>
+    <a class="post-meta__author" href={url(`/author/${author}/`)} rel="author">{author}</a>
     <span class="post-meta__sep">•</span>
     <time datetime={pubDate.toISOString()}>{dateStr}</time>
     {readingTime !== null && (
@@ -51,7 +52,7 @@ const readingTime = charCount ? Math.max(1, Math.ceil(charCount / 500)) : null;
         const label = t?.name ?? slug;
         return (
           <li>
-            <a class="post-meta__tag" href={`/tag/${slug}/`}>{label}</a>
+            <a class="post-meta__tag" href={url(`/tag/${slug}/`)}>{label}</a>
           </li>
         );
       })}

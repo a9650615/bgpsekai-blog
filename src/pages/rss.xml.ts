@@ -10,7 +10,7 @@ import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
 
-const SITE_ORIGIN = 'https://blog.bgpsekai.club';
+const SITE_ORIGIN_FALLBACK = 'https://blog.bgpsekai.club';
 
 export async function GET(context: APIContext) {
   const all = (await getCollection('posts')).sort(
@@ -18,12 +18,18 @@ export async function GET(context: APIContext) {
   );
   const latest = all.slice(0, 20);
 
+  // Origin (no base) for the feed `<link>` element; Astro recommends passing
+  // `context.site` through here so it picks up env-driven SITE_URL.
+  const origin = (context.site?.toString() ?? SITE_ORIGIN_FALLBACK).replace(/\/$/, '');
+  // BASE_URL is injected by Vite at build time; ends with '/'.
+  const base = import.meta.env.BASE_URL;
+
   return rss({
     title: '柏狗屁世界',
     description: '柏狗屁世界 — 雜談與筆記。',
-    site: context.site?.toString() ?? SITE_ORIGIN,
+    site: origin,
     items: latest.map((post) => {
-      const link = `${SITE_ORIGIN}/${post.slug}/`;
+      const link = `${origin}${base}${post.slug}/`;
       return {
         title: post.data.title,
         link,

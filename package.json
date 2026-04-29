@@ -10,7 +10,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
-    "test": "node --test --import tsx \"src/lib/baha-danmu/__tests__/*.test.ts\""
+    "test": "node --test --import tsx \"src/lib/baha-danmu/__tests__/*.test.ts\" \"src/utils/__tests__/*.test.ts\""
   },
   "keywords": [],
   "author": "",

@@ -1,6 +1,8 @@
 ---
 // Site footer. Marked `data-pagefind-ignore` so the copyright + RSS link don't
 // pollute search snippets.
+import { url } from '../utils/url.ts';
+
 const year = new Date().getFullYear();
 ---
 
@@ -10,7 +12,7 @@ const year = new Date().getFullYear();
       © 2014–{year} 柏狗屁世界
     </p>
     <nav class="site-footer__links" aria-label="footer">
-      <a href="/rss.xml" type="application/rss+xml">RSS</a>
+      <a href={url('/rss.xml')} type="application/rss+xml">RSS</a>
     </nav>
   </div>
 </footer>

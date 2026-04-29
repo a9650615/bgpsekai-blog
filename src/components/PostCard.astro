@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import { url } from '../utils/url.ts';
 
 interface Props {
   entry: CollectionEntry<'posts'>;
@@ -9,7 +10,7 @@ interface Props {
 const { entry } = Astro.props;
 const { title, pubDate, author, excerpt, featureImage } = entry.data;
 // `entry.slug` is Astro 5 type:'content' canonical slug — see config.ts note.
-const href = `/${entry.slug}/`;
+const href = url(`/${entry.slug}/`);
 
 const dateStr = pubDate.toLocaleDateString('zh-TW', {
   year: 'numeric',

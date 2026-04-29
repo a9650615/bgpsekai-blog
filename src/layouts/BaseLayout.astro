@@ -16,6 +16,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Giscus from '../components/Giscus.astro';
+import { url as baseUrl } from '../utils/url.ts';
 import '../styles/global.css';
 
 interface Props {
@@ -38,16 +39,26 @@ const {
   showGiscus = false,
 } = Astro.props;
 
+// `Astro.site` is the bare origin (no base), and `Astro.url.pathname` already
+// includes the base — so when we have a `canonicalPath` from a caller (which
+// is base-less, e.g. `/about-me/`), we must run it through `baseUrl()` to
+// prepend the deploy base before stitching to the origin. Falling back to
+// `Astro.url.pathname` keeps it correct when no canonicalPath is supplied
+// (since pathname already has the base baked in).
 const siteOrigin = Astro.site?.toString().replace(/\/$/, '') ?? 'https://blog.bgpsekai.club';
-const path = canonicalPath ?? Astro.url.pathname;
-const canonicalUrl = `${siteOrigin}${path}`;
+const pathWithBase = canonicalPath != null ? baseUrl(canonicalPath) : Astro.url.pathname;
+const canonicalUrl = `${siteOrigin}${pathWithBase}`;
 
 function resolveOgImage(img: ImageMetadata | string | undefined): string | undefined {
   if (!img) return undefined;
   if (typeof img === 'string') {
-    return img.startsWith('http') ? img : `${siteOrigin}${img.startsWith('/') ? '' : '/'}${img}`;
+    // String src: treat as already-absolute, OR a site-relative path that
+    // needs the base prepended via baseUrl().
+    if (img.startsWith('http')) return img;
+    return `${siteOrigin}${baseUrl(img)}`;
   }
-  // ImageMetadata: src is a build-time path beginning with `/`.
+  // ImageMetadata: `src` is a Vite-emitted build-time path that ALREADY
+  // includes the base (Vite reads it from `import.meta.env.BASE_URL`).
   return `${siteOrigin}${img.src}`;
 }
 const ogImage = resolveOgImage(featureImage);
@@ -94,7 +105,7 @@ const faviconSvg =
       rel="alternate"
       type="application/rss+xml"
       title="柏狗屁世界"
-      href={`${siteOrigin}/rss.xml`}
+      href={`${siteOrigin}${baseUrl('/rss.xml')}`}
     />
 
     <!-- AdSense -->
