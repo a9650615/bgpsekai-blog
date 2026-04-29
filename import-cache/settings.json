@@ -1,0 +1,39 @@
+{
+  "settings": {
+    "title": "柏狗屁世界",
+    "description": "你的鳥世界",
+    "logo": "https://blog.bgpsekai.club/content/images/2019/08/logo.png",
+    "icon": null,
+    "accent_color": "#19185d",
+    "cover_image": "https://casper.ghost.org/v1.0.0/images/blog-cover.jpg",
+    "facebook": null,
+    "twitter": null,
+    "lang": "zh_tw",
+    "locale": "zh_tw",
+    "timezone": "Asia/Singapore",
+    "codeinjection_head": "<!-- Global site tag (gtag.js) - Google Analytics -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-51767762-4\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n\n  gtag('config', 'UA-51767762-4');\n</script>\n<script async custom-element=\"amp-auto-ads\" src=\"https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js\">\n</script>",
+    "codeinjection_foot": "<script data-ad-client=\"ca-pub-9488921689181013\" async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\n<script>\n     (adsbygoogle = window.adsbygoogle || []).push({});\n</script>",
+    "navigation": [
+      {
+        "label": "首頁",
+        "url": "/"
+      },
+      {
+        "label": "巴哈彈幕轉 ASS",
+        "url": "/baha-danmu-to-ass/"
+      }
+    ],
+    "secondary_navigation": [],
+    "meta_title": null,
+    "meta_description": "紀錄前端、後端、以及一些日常生活，以及時不時開箱",
+    "og_image": null,
+    "og_title": null,
+    "og_description": null,
+    "twitter_image": null,
+    "twitter_title": null,
+    "twitter_description": null,
+    "members_support_address": "noreply",
+    "url": "https://blog.bgpsekai.club/"
+  },
+  "meta": {}
+}

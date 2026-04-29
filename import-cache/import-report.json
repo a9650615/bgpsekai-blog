@@ -1,0 +1,270 @@
+{
+  "failed_assets": [
+    {
+      "url": "https://blog.bgpsekai.club/content/images/2018/04/P4010468-500x333.jpg",
+      "error": "HTTP 404 Not Found"
+    },
+    {
+      "url": "https://blog.bgpsekai.club/content/images/2018/04/P4010467-500x333.jpg",
+      "error": "HTTP 404 Not Found"
+    },
+    {
+      "url": "https://blog.bgpsekai.club/content/images/2018/04/P4010508-500x333.jpg",
+      "error": "HTTP 404 Not Found"
+    },
+    {
+      "url": "https://blog.bgpsekai.club/content/images/2017/10/P6290322-200x200.jpg",
+      "error": "HTTP 404 Not Found"
+    },
+    {
+      "url": "https://blog.bgpsekai.club/content/images/2017/08/IMAG0069-200x200.jpg",
+      "error": "HTTP 404 Not Found"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2017/02/13-2017-02-24.jpg",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2017/02/14-2017-02-24.jpg",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2017/02/15-2017-02-24.jpg",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/1-500x168.jpg",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/2-500x237.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/3-489x500.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/5-489x500.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/1.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/6-1-500x194.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/1-1-500x270.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/2-1-489x500.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/1-2-500x121.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/1-500x270.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/2-500x270.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/3-500x270.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/4-500x270.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/5-500x270.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/6-500x194.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://birdyo.ddns.net/blog/wp-content/uploads/2016/05/yooo-500x235.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://birdyo.ddns.net/blog/wp-content/uploads/2016/04/image-2016-04-14-1-500x170.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://birdyo.ddns.net/blog/wp-content/uploads/2016/04/image-2016-04-14-001.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://birdyo.ddns.net/blog/wp-content/uploads/2016/04/image-2016-04-14-002-500x128.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://birdyo.ddns.net/blog/wp-content/uploads/2016/04/image-2016-04-14-003-347x500.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/04/1-500x269.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/04/2-500x269.jpg",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/04/2014-4-11-installlaravelerror.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://birdyo.ddns.net/blog/wp-content/uploads/2016/04/2014-4-11-installlaravelfind-500x171.png",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/04/pasted-image-0-500x171.png",
+      "error": "fetch failed"
+    }
+  ],
+  "unmapped_refs": [
+    {
+      "file": "src/content/posts/e6-95-97-e5-ae-b6-e5-a8-81-e5-89-9b-xps-sx8000--e8-a8-98-e9-8c-84-e6-96-87.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2017/02/13-2017-02-24.jpg"
+    },
+    {
+      "file": "src/content/posts/e6-95-97-e5-ae-b6-e5-a8-81-e5-89-9b-xps-sx8000--e8-a8-98-e9-8c-84-e6-96-87.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2017/02/14-2017-02-24.jpg"
+    },
+    {
+      "file": "src/content/posts/e6-95-97-e5-ae-b6-e5-a8-81-e5-89-9b-xps-sx8000--e8-a8-98-e9-8c-84-e6-96-87.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2017/02/15-2017-02-24.jpg"
+    },
+    {
+      "file": "src/content/posts/http2-with-nodejs-express--e2-89-92--e6-87-b6-e4-ba-ba-e5-8c-85.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/1-500x168.jpg"
+    },
+    {
+      "file": "src/content/posts/http2-with-nodejs-express--e2-89-92--e6-87-b6-e4-ba-ba-e5-8c-85.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/2-500x237.png"
+    },
+    {
+      "file": "src/content/posts/http2-with-nodejs-express--e2-89-92--e6-87-b6-e4-ba-ba-e5-8c-85.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/3-489x500.png"
+    },
+    {
+      "file": "src/content/posts/http2-with-nodejs-express--e2-89-92--e6-87-b6-e4-ba-ba-e5-8c-85.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/5-489x500.png"
+    },
+    {
+      "file": "src/content/posts/http2-with-nodejs-express--e2-89-92--e6-87-b6-e4-ba-ba-e5-8c-85.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/1.png"
+    },
+    {
+      "file": "src/content/posts/laravel-5-2--e7-89-88-e6-96-b0-e5-a2-9e-e5-85-a7-e5-bb-ba-auth--e6-95-99-e5-ad-b8.md",
+      "url": "https://birdyo.ddns.net/blog/wp-content/uploads/2016/04/image-2016-04-14-1-500x170.png"
+    },
+    {
+      "file": "src/content/posts/laravel-5-2--e7-89-88-e6-96-b0-e5-a2-9e-e5-85-a7-e5-bb-ba-auth--e6-95-99-e5-ad-b8.md",
+      "url": "https://birdyo.ddns.net/blog/wp-content/uploads/2016/04/image-2016-04-14-001.png"
+    },
+    {
+      "file": "src/content/posts/laravel-5-2--e7-89-88-e6-96-b0-e5-a2-9e-e5-85-a7-e5-bb-ba-auth--e6-95-99-e5-ad-b8.md",
+      "url": "https://birdyo.ddns.net/blog/wp-content/uploads/2016/04/image-2016-04-14-002-500x128.png"
+    },
+    {
+      "file": "src/content/posts/laravel-5-2--e7-89-88-e6-96-b0-e5-a2-9e-e5-85-a7-e5-bb-ba-auth--e6-95-99-e5-ad-b8.md",
+      "url": "https://birdyo.ddns.net/blog/wp-content/uploads/2016/04/image-2016-04-14-003-347x500.png"
+    },
+    {
+      "file": "src/content/posts/laravel-cors.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/6-1-500x194.png"
+    },
+    {
+      "file": "src/content/posts/laravel-cors.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/1-1-500x270.png"
+    },
+    {
+      "file": "src/content/posts/laravel-cors.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/2-1-489x500.png"
+    },
+    {
+      "file": "src/content/posts/laravel-e5-ae-89-e8-a3-9d-e5-b0-8fbug-e5-8f-8anginx-e9-85-8d-e7-bd-ae-e6-aa-94-e4-bf-9d-e5-ad-98.md",
+      "url": "https://birdyo.ddns.net/blog/wp-content/uploads/2016/04/2014-4-11-installlaravelfind-500x171.png"
+    },
+    {
+      "file": "src/content/posts/laravel-e5-ae-89-e8-a3-9d-e5-b0-8fbug-e5-8f-8anginx-e9-85-8d-e7-bd-ae-e6-aa-94-e4-bf-9d-e5-ad-98.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/04/2014-4-11-installlaravelerror.png"
+    },
+    {
+      "file": "src/content/posts/laravel-email.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/1-2-500x121.png"
+    },
+    {
+      "file": "src/content/posts/laravel-jwt.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/1-500x270.png"
+    },
+    {
+      "file": "src/content/posts/laravel-jwt.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/2-500x270.png"
+    },
+    {
+      "file": "src/content/posts/laravel-jwt.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/3-500x270.png"
+    },
+    {
+      "file": "src/content/posts/laravel-jwt.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/4-500x270.png"
+    },
+    {
+      "file": "src/content/posts/laravel-jwt.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/5-500x270.png"
+    },
+    {
+      "file": "src/content/posts/laravel-jwt.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/07/6-500x194.png"
+    },
+    {
+      "file": "src/content/posts/laravel-restful-resource-controllers.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/04/1-500x269.png"
+    },
+    {
+      "file": "src/content/posts/laravel-restful-resource-controllers.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/04/2-500x269.jpg"
+    },
+    {
+      "file": "src/content/posts/ps4-pro-white-and-black.md",
+      "url": "https://blog.bgpsekai.club/content/images/2018/04/P4010468-500x333.jpg"
+    },
+    {
+      "file": "src/content/posts/ps4-pro-white-and-black.md",
+      "url": "https://blog.bgpsekai.club/content/images/2018/04/P4010467-500x333.jpg"
+    },
+    {
+      "file": "src/content/posts/ps4-pro-white-and-black.md",
+      "url": "https://blog.bgpsekai.club/content/images/2018/04/P4010508-500x333.jpg"
+    },
+    {
+      "file": "src/content/posts/reactjs-with-es6-map.md",
+      "url": "https://bgpsekai.thisistap.com/wp-content/uploads/2016/04/pasted-image-0-500x171.png"
+    },
+    {
+      "file": "src/content/posts/rx560-open-box.md",
+      "url": "https://blog.bgpsekai.club/content/images/2017/10/P6290322-200x200.jpg"
+    },
+    {
+      "file": "src/content/posts/rx570-openbox-and-mining-test.md",
+      "url": "https://blog.bgpsekai.club/content/images/2017/08/IMAG0069-200x200.jpg"
+    },
+    {
+      "file": "src/content/posts/scss--e5-be-9e-e9-9b-b6-e9-96-8b-e5-a7-8b-e5-ad-b8-e7-bf-92-e4-b8-ad.md",
+      "url": "https://birdyo.ddns.net/blog/wp-content/uploads/2016/05/yooo-500x235.png"
+    }
+  ]
+}

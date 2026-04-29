@@ -1,9 +1,13 @@
 import { defineCollection, z } from 'astro:content';
 
+// Note: `slug` is NOT in the schema. Astro's content-layer (type: 'content')
+// reserves the `slug` frontmatter field as the URL slug override and strips
+// it from `data` before Zod validation. Access it via `entry.slug` instead
+// of `entry.data.slug` in routes. We still keep `slug:` in frontmatter so
+// hex/Pinyin Ghost slugs survive as canonical URLs.
 const baseSchema = ({ image }: { image: () => z.ZodType }) =>
   z.object({
     title: z.string(),
-    slug: z.string(),
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     author: z.string(),

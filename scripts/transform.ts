@@ -240,10 +240,15 @@ export function runTransform(): TransformStats {
     unchanged: 0,
   };
 
+  // Strip leading dashes from filename — Astro 5's content-collection glob
+  // loader fails schema validation on entries whose filename starts with '-'.
+  // The slug in frontmatter (used for URLs) keeps the original Ghost value.
+  const fsName = (slug: string) => slug.replace(/^-+/, '');
+
   for (const post of posts) {
     const { ext, content } = transformItem(post, td, getNeedsMdx, resetMdx);
     if (ext === '.mdx') stats.mdxCount += 1;
-    const out = repoPath('src', 'content', 'posts', `${post.slug}${ext}`);
+    const out = repoPath('src', 'content', 'posts', `${fsName(post.slug)}${ext}`);
     if (writeFileIfChanged(out, content)) stats.written += 1;
     else stats.unchanged += 1;
     stats.posts += 1;
@@ -262,7 +267,7 @@ export function runTransform(): TransformStats {
     }
     const { ext, content } = transformItem(page, td, getNeedsMdx, resetMdx);
     if (ext === '.mdx') stats.mdxCount += 1;
-    const out = repoPath('src', 'content', 'pages', `${page.slug}${ext}`);
+    const out = repoPath('src', 'content', 'pages', `${fsName(page.slug)}${ext}`);
     if (writeFileIfChanged(out, content)) stats.written += 1;
     else stats.unchanged += 1;
     stats.pages += 1;
