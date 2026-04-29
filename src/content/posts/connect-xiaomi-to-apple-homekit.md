@@ -107,11 +107,11 @@ docker 指令（我用 UI 調的，有問題再跟我說）
 
 正常情況下，現在就可以在8080 port 看到登入介面了
 
-![螢幕快照 2018-03-13 上午3.10.41.png](../../assets/blog/content/images/2018/03/2018-03-13-%E4%B8%8A%E5%8D%883.10.41.png)
+![螢幕快照 2018-03-13 上午3.10.41.png](../../assets/blog/content/images/2018/03/2018-03-13-上午3.10.41.png)
 
 預設帳密都 admin，登入後因該可以看到這介面，然後就拿手機去開家庭去掃條碼吧
 
-![螢幕快照 2018-03-13 上午3.16.16.png](../../assets/blog/content/images/2018/03/2018-03-13-%E4%B8%8A%E5%8D%883.16.16.png)
+![螢幕快照 2018-03-13 上午3.16.16.png](../../assets/blog/content/images/2018/03/2018-03-13-上午3.16.16.png)
 
 不過這樣還不會有設備，你還必須配置 config.json 添加相關設備對應 ip 及 token ，如果讀取有困難可以使用以下 library : [miio](https://github.com/aholstenson/miio)
 

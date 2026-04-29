@@ -78,8 +78,17 @@ export function planTarget(url: string): AssetTarget | null {
     return null;
   }
   if (GHOST_HOSTS.has(parsed.hostname)) {
-    // Mirror /content/images/... or anything under the Ghost host preserving structure.
-    const path = parsed.pathname.replace(/^\/+/, '');
+    // Mirror /content/images/... preserving structure. Decode percent-escapes
+    // so CJK filenames are stored as literal Unicode on disk — Astro's image
+    // resolver decodeURIComponent's paths before fs lookup, and a literal `%`
+    // in the filename would never match the decoded reference.
+    let pathname: string;
+    try {
+      pathname = decodeURIComponent(parsed.pathname);
+    } catch {
+      pathname = parsed.pathname;
+    }
+    const path = pathname.replace(/^\/+/, '');
     const rel = `src/assets/blog/${path}`;
     return {
       absPath: repoPath(rel),

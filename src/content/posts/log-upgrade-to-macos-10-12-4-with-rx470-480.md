@@ -24,7 +24,7 @@ excerpt: "一不小心忘記關掉 app store 的自動更新了, 拖了兩個禮
 
 修改兩個 kext 的 Info.plist
 
-![螢幕快照 2017-04-11 下午11.24.09.png](../../assets/blog/content/images/2017/04/2017-04-11-%E4%B8%8B%E5%8D%8811.24.09.png)
+![螢幕快照 2017-04-11 下午11.24.09.png](../../assets/blog/content/images/2017/04/2017-04-11-下午11.24.09.png)
 
 各在 IOPCIMatch 底下添加 fake id ***0x67DF1002***
 
