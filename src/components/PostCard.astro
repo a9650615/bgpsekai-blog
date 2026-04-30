@@ -2,14 +2,15 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { url } from '../utils/url.ts';
+import { tagStyle } from '../utils/tagColor.ts';
 
 interface Props {
   entry: CollectionEntry<'posts'>;
+  variant?: 'default' | 'wide';
 }
 
-const { entry } = Astro.props;
-const { title, pubDate, author, excerpt, featureImage } = entry.data;
-// `entry.slug` is Astro 5 type:'content' canonical slug — see config.ts note.
+const { entry, variant = 'default' } = Astro.props;
+const { title, pubDate, author, excerpt, featureImage, tags } = entry.data;
 const href = url(`/${entry.slug}/`);
 
 const dateStr = pubDate.toLocaleDateString('zh-TW', {
@@ -18,24 +19,29 @@ const dateStr = pubDate.toLocaleDateString('zh-TW', {
   day: 'numeric',
 });
 
-// Reading time — Chinese-leaning heuristic. body() isn't available here without
-// rendering; estimate from excerpt length when available, otherwise fallback.
 const charCount = (excerpt ?? title).length;
 const readingTime = Math.max(1, Math.ceil(charCount / 500));
+
+const primaryTag = tags?.[0];
 ---
 
-<article class="post-card">
+<article class:list={['post-card', variant === 'wide' && 'post-card--wide']}>
   <a href={href} class="post-card__link" aria-label={title}>
     {featureImage && typeof featureImage !== 'string' && (
       <div class="post-card__media">
         <Image
           src={featureImage}
           alt=""
-          width={600}
-          height={338}
+          width={variant === 'wide' ? 960 : 600}
+          height={variant === 'wide' ? 540 : 338}
           loading="lazy"
           decoding="async"
         />
+        {primaryTag && (
+          <span class="post-card__tag-flag" style={tagStyle(primaryTag)}>
+            {primaryTag}
+          </span>
+        )}
       </div>
     )}
     <div class="post-card__body">
@@ -43,10 +49,10 @@ const readingTime = Math.max(1, Math.ceil(charCount / 500));
       {excerpt && <p class="post-card__excerpt">{excerpt}</p>}
       <div class="post-card__meta">
         <span class="post-card__author">{author}</span>
-        <span class="post-card__sep">•</span>
+        <span class="post-card__sep">·</span>
         <time datetime={pubDate.toISOString()}>{dateStr}</time>
-        <span class="post-card__sep">•</span>
-        <span>{readingTime} min read</span>
+        <span class="post-card__sep">·</span>
+        <span>{readingTime} min</span>
       </div>
     </div>
   </a>

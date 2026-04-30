@@ -1,6 +1,7 @@
 ---
 import tagsData from '../data/tags.json';
 import { url } from '../utils/url.ts';
+import { tagStyle } from '../utils/tagColor.ts';
 
 interface TagRecord {
   slug: string;
@@ -52,7 +53,11 @@ const readingTime = charCount ? Math.max(1, Math.ceil(charCount / 500)) : null;
         const label = t?.name ?? slug;
         return (
           <li>
-            <a class="post-meta__tag" href={url(`/tag/${slug}/`)}>{label}</a>
+            <a
+              class="post-meta__tag"
+              href={url(`/tag/${slug}/`)}
+              style={tagStyle(slug)}
+            >{label}</a>
           </li>
         );
       })}

@@ -78,6 +78,32 @@ const faviconSvg =
 <!doctype html>
 <html lang="zh-Hant">
   <head>
+    <!--
+      No-flash theme init: must run synchronously before <body> paints, so we
+      keep it as the very first <head> child. Reads localStorage if the user
+      already chose, otherwise honours system preference. Sets data-theme on
+      <html> which the CSS reads via [data-theme="dark"].
+    -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          if (stored === 'dark' || stored === 'light') {
+            document.documentElement.setAttribute('data-theme', stored);
+            return;
+          }
+        } catch (e) {
+          /* private mode — fall through */
+        }
+        var prefersDark =
+          window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute(
+          'data-theme',
+          prefersDark ? 'dark' : 'light',
+        );
+      })();
+    </script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

@@ -1,0 +1,67 @@
+---
+// Home-page hero. Renders the site title + tagline over an accent gradient,
+// with the latest post highlighted as the "feature" card on the right
+// (cover-as-bg) so the home page reads as something more than a flat grid.
+//
+// On mobile the feature card stacks below the title block.
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { url } from '../utils/url.ts';
+
+interface Props {
+  feature: CollectionEntry<'posts'>;
+  tagline?: string;
+}
+
+const { feature, tagline = '雜談、筆記、踩雷與作品 — 不定期更新' } = Astro.props;
+const { title, excerpt, pubDate, featureImage } = feature.data;
+const href = url(`/${feature.slug}/`);
+const dateStr = pubDate.toLocaleDateString('zh-TW', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<section class="hero">
+  <div class="hero__inner l-wrap">
+    <div class="hero__intro">
+      <p class="hero__kicker">柏狗屁世界</p>
+      <h1 class="hero__title">每週一篇也好,沒寫也罷</h1>
+      <p class="hero__tagline">{tagline}</p>
+      <div class="hero__cta">
+        <a href={url('/rss.xml')} class="hero__btn hero__btn--ghost">
+          訂 RSS
+        </a>
+        <a href="#latest" class="hero__btn hero__btn--solid">
+          看最新文章 ↓
+        </a>
+      </div>
+    </div>
+
+    <a class="hero__feature" href={href} aria-label={`Featured: ${title}`}>
+      <span class="hero__feature-flag">Featured</span>
+      {featureImage && typeof featureImage !== 'string' && (
+        <div class="hero__feature-cover">
+          <Image
+            src={featureImage}
+            alt=""
+            width={720}
+            height={405}
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      )}
+      <div class="hero__feature-body">
+        <h2 class="hero__feature-title">{title}</h2>
+        {excerpt && <p class="hero__feature-excerpt">{excerpt}</p>}
+        <p class="hero__feature-meta">
+          <time datetime={pubDate.toISOString()}>{dateStr}</time>
+          <span>·</span>
+          <span class="hero__feature-readmore">繼續閱讀 →</span>
+        </p>
+      </div>
+    </a>
+  </div>
+</section>

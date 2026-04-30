@@ -8,6 +8,7 @@
 // All in-site `<a href>`s flow through `url()` so the deploy base
 // (`/bgpsekai-blog/` on GH Pages, `/` on CF Pages) gets prepended.
 import Search from 'astro-pagefind/components/Search';
+import ThemeToggle from './ThemeToggle.astro';
 import { url } from '../utils/url.ts';
 
 const navItems: Array<{ href: string; label: string }> = [
@@ -45,6 +46,10 @@ function isCurrent(href: string): boolean {
 
     <div class="site-header__search">
       <Search id="site-search" className="pagefind-ui--header" />
+    </div>
+
+    <div class="site-header__tools">
+      <ThemeToggle />
     </div>
   </div>
 </header>
