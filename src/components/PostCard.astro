@@ -14,10 +14,9 @@ interface TagRecord {
 
 interface Props {
   entry: CollectionEntry<'posts'>;
-  variant?: 'default' | 'wide';
 }
 
-const { entry, variant = 'default' } = Astro.props;
+const { entry } = Astro.props;
 const { title, pubDate, author, excerpt, featureImage, tags } = entry.data;
 const href = url(`/${entry.slug}/`);
 
@@ -37,32 +36,35 @@ const primaryTagSlug = tags?.[0];
 const primaryTagLabel = primaryTagSlug
   ? tagsBySlug.get(primaryTagSlug)?.name ?? primaryTagSlug
   : null;
+
+const authorInitial = author.charAt(0).toUpperCase();
 ---
 
-<article class:list={['post-card', variant === 'wide' && 'post-card--wide']}>
+<article class:list={['post-card', !featureImage && 'post-card--no-media']}>
   <a href={href} class="post-card__link" aria-label={title}>
-    {featureImage && typeof featureImage !== 'string' && (
-      <div class="post-card__media">
+    <div class="post-card__media">
+      {featureImage && typeof featureImage !== 'string' && (
         <Image
           src={featureImage}
           alt=""
-          width={variant === 'wide' ? 960 : 600}
-          height={variant === 'wide' ? 540 : 338}
+          width={600}
+          height={338}
           loading="lazy"
           decoding="async"
         />
-        {primaryTagSlug && primaryTagLabel && (
-          <span class="post-card__tag-flag" style={tagStyle(primaryTagSlug)}>
-            {primaryTagLabel}
-          </span>
-        )}
-      </div>
-    )}
+      )}
+      <span class="post-card__author" aria-hidden="true">{authorInitial}</span>
+      {primaryTagSlug && primaryTagLabel && (
+        <span class="post-card__tag-flag" style={tagStyle(primaryTagSlug)}>
+          {primaryTagLabel}
+        </span>
+      )}
+    </div>
     <div class="post-card__body">
       <h2 class="post-card__title">{title}</h2>
       {excerpt && <p class="post-card__excerpt">{excerpt}</p>}
       <div class="post-card__meta">
-        <span class="post-card__author">{author}</span>
+        <span>{author}</span>
         <span class="post-card__sep">·</span>
         <time datetime={pubDate.toISOString()}>{dateStr}</time>
         <span class="post-card__sep">·</span>

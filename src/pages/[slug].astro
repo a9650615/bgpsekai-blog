@@ -2,7 +2,7 @@
 // /<slug>/ — single post page.
 //
 // Spec ref: blog-rendering "Render every post and page" + "Casper-ish layout
-// fidelity" (cover → title → byline → body → tag chips → older/newer).
+// fidelity" (cover hero → title → byline → body → tag chips → older/newer).
 //
 // IMPORTANT: Astro 5 `type: 'content'` strips frontmatter `slug` from data and
 // exposes it as `entry.slug`. See src/content/config.ts.
@@ -10,8 +10,16 @@ import type { GetStaticPaths } from 'astro';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PostMeta from '../components/PostMeta.astro';
+import tagsData from '../data/tags.json';
+import { tagStyle } from '../utils/tagColor.ts';
 import { url } from '../utils/url.ts';
+
+interface TagRecord {
+  slug: string;
+  originalSlug: string;
+  name: string;
+  description?: string;
+}
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection('posts');
@@ -36,12 +44,25 @@ const older = idx >= 0 && idx < all.length - 1 ? all[idx + 1] : null;
 const { Content } = await entry.render();
 // reading-time hint via body length (approx, CN-leaning).
 const charCount = entry.body?.length;
+const readingTime = charCount ? Math.max(1, Math.ceil(charCount / 500)) : null;
+
+const dateStr = pubDate.toLocaleDateString('zh-TW', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const tagsBySlug = new Map<string, TagRecord>(
+  (tagsData as TagRecord[]).map((t) => [t.slug, t]),
+);
 
 // TODO: data.canonicalUrl is currently unused (0 posts set it). When/if a post
 // declares an external canonicalUrl, BaseLayout would need an override prop or
 // a head <slot> consumer here. Surfacing it as a TODO per task brief.
 const pageTitle = metaTitle ?? title;
 const pageDescription = metaDescription ?? excerpt;
+
+const hasCover = featureImage && typeof featureImage !== 'string';
 ---
 
 <BaseLayout
@@ -53,24 +74,59 @@ const pageDescription = metaDescription ?? excerpt;
   publishDate={pubDate}
   showGiscus={true}
 >
-  <article class="post-page l-wrap">
-    {featureImage && typeof featureImage !== 'string' && (
-      <figure class="post-page__cover">
+  <section
+    class:list={[
+      'hero',
+      'post-page__hero',
+      hasCover ? 'hero--with-picture' : 'hero--no-picture',
+    ]}
+  >
+    {hasCover && (
+      <div class="hero__picture">
         <Image
           src={featureImage}
           alt=""
-          width={1200}
-          height={675}
+          width={1920}
+          height={900}
           loading="eager"
           decoding="async"
         />
-      </figure>
+      </div>
     )}
+    <div class="hero__content l-wrap">
+      <h1 class="hero__title is-bigger">{title}</h1>
+      <div class="hero__inner-meta">
+        <a href={url(`/author/${author}/`)} rel="author">{author}</a>
+        <span>•</span>
+        <time datetime={pubDate.toISOString()}>{dateStr}</time>
+        {readingTime !== null && (
+          <>
+            <span>•</span>
+            <span>{readingTime} min read</span>
+          </>
+        )}
+      </div>
+    </div>
+  </section>
 
-    <header class="post-page__header">
-      <h1 class="post-page__title">{title}</h1>
-      <PostMeta author={author} pubDate={pubDate} tags={tags} charCount={charCount} />
-    </header>
+  <article class="post-page l-wrap">
+    {tags && tags.length > 0 && (
+      <ul class="post-meta__tags" aria-label="標籤">
+        {tags.map((slug) => {
+          const t = tagsBySlug.get(slug);
+          const label = t?.name ?? slug;
+          return (
+            <li>
+              <a
+                class="post-meta__tag"
+                href={url(`/tag/${slug}/`)}
+                style={tagStyle(slug)}
+              >{label}</a>
+            </li>
+          );
+        })}
+      </ul>
+    )}
 
     <div class="prose post-page__body">
       <Content />
@@ -92,61 +148,3 @@ const pageDescription = metaDescription ?? excerpt;
     </nav>
   </article>
 </BaseLayout>
-
-<style>
-  .post-page {
-    padding: 2rem 0 3rem;
-  }
-  .post-page__cover {
-    margin: 0 0 1.5rem;
-  }
-  .post-page__cover img {
-    width: 100%;
-    height: auto;
-    border-radius: 6px;
-  }
-  .post-page__header {
-    margin-bottom: 2rem;
-  }
-  .post-page__title {
-    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-    line-height: 1.25;
-    margin: 0 0 0.75rem;
-  }
-  .post-page__nav {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    border-top: 1px solid var(--fg-muted, #ddd);
-    padding-top: 1.5rem;
-    margin-top: 2.5rem;
-  }
-  .post-page__nav-link {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    padding: 0.75rem;
-    border-radius: 4px;
-    text-decoration: none;
-  }
-  .post-page__nav-link--newer {
-    text-align: right;
-    align-items: flex-end;
-  }
-  .post-page__nav-label {
-    font-size: 0.8em;
-    color: var(--fg-muted, #888);
-  }
-  .post-page__nav-title {
-    font-weight: 600;
-  }
-  @media (max-width: 640px) {
-    .post-page__nav {
-      grid-template-columns: 1fr;
-    }
-    .post-page__nav-link--newer {
-      text-align: left;
-      align-items: flex-start;
-    }
-  }
-</style>

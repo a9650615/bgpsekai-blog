@@ -6,8 +6,8 @@
 //
 // Implementation: rather than `paginate()` (which would also try to emit
 // /page/1/ as an alias), we hand-slice the first 10 posts here so the URL
-// space stays clean. Latest post is rendered as the Hero feature; posts 2-10
-// fill the grid below.
+// space stays clean. The latest post's featureImage is used as the Hero
+// background; the grid below renders all 10 posts.
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
@@ -22,7 +22,8 @@ const all = (await getCollection('posts')).sort(
 );
 
 const totalPages = Math.max(1, Math.ceil(all.length / POSTS_PER_PAGE));
-const [feature, ...rest] = all.slice(0, POSTS_PER_PAGE);
+const posts = all.slice(0, POSTS_PER_PAGE);
+const heroCover = posts[0]?.data.featureImage;
 ---
 
 <BaseLayout
@@ -31,12 +32,12 @@ const [feature, ...rest] = all.slice(0, POSTS_PER_PAGE);
   canonicalPath="/"
   ogType="website"
 >
-  {feature && <Hero feature={feature} />}
+  <Hero cover={typeof heroCover !== 'string' ? heroCover : undefined} bigger />
 
   <div class="l-wrap" id="latest">
     <h2 class="section-title">最新文章</h2>
     <section class="post-grid">
-      {rest.map((post) => <PostCard entry={post} />)}
+      {posts.map((post) => <PostCard entry={post} />)}
     </section>
     <Pagination currentPage={1} totalPages={totalPages} basePath={url('/')} />
   </div>
