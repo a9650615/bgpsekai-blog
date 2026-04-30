@@ -21,10 +21,21 @@
 
 name: Deploy to Cloudflare Pages
 
+# Auto-trigger on push is DISABLED until CF Pages is configured.
+# Required state before re-enabling the `push:` block below:
+#   1. Repo secrets set: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID
+#      (https://github.com/a9650615/bgpsekai-blog/settings/secrets/actions)
+#   2. CF Pages project named `bgpsekai-blog` exists in the CF dashboard
+#   3. Manual `workflow_dispatch` run completes green at least once
+#
+# Until then, only manual dispatches run — `git push` triggers nothing here.
+# GitHub Pages preview (`.github/workflows/github-pages.yml`) handles
+# every-push deploys to https://a9650615.github.io/bgpsekai-blog/ in the
+# meantime.
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:
 
 # Cancel in-flight deploys for the same ref so only the latest push wins.
