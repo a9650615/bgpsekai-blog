@@ -6,6 +6,7 @@
 import type { GetStaticPaths } from 'astro';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
 import PostCard from '../../components/PostCard.astro';
 import Pagination from '../../components/Pagination.astro';
 import { url } from '../../utils/url.ts';
@@ -44,7 +45,14 @@ const { posts, currentPage, totalPages } = Astro.props;
   canonicalPath={`/page/${currentPage}/`}
   ogType="website"
 >
+  <Hero
+    title={`第 ${currentPage} 頁`}
+    description={`共 ${totalPages} 頁`}
+    showCta={false}
+  />
+
   <div class="l-wrap">
+    <h2 class="section-title">最新文章</h2>
     <section class="post-grid">
       {posts.map((post) => <PostCard entry={post} />)}
     </section>

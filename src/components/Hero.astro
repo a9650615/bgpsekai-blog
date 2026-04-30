@@ -15,6 +15,8 @@ interface Props {
   title?: string;
   description?: string;
   bigger?: boolean;
+  /** 是否顯示「訂 RSS / 看最新文章」CTA。預設 true,只給 home 用。 */
+  showCta?: boolean;
 }
 
 const {
@@ -22,6 +24,7 @@ const {
   title = '柏狗屁世界',
   description = '你的鳥世界',
   bigger = false,
+  showCta = true,
 } = Astro.props;
 
 const hasPictureCover = !!cover && typeof cover !== 'string';
@@ -43,9 +46,11 @@ const hasPictureCover = !!cover && typeof cover !== 'string';
   <div class="hero__content l-wrap">
     <h1 class:list={['hero__title', { 'is-bigger': bigger }]}>{title}</h1>
     <p class="hero__description">{description}</p>
-    <div class="hero__cta">
-      <a href={url('/rss.xml')} class="hero__btn hero__btn--ghost">訂 RSS</a>
-      <a href="#latest" class="hero__btn hero__btn--solid">看最新文章 ↓</a>
-    </div>
+    {showCta && (
+      <div class="hero__cta">
+        <a href={url('/rss.xml')} class="hero__btn hero__btn--ghost">訂 RSS</a>
+        <a href="#latest" class="hero__btn hero__btn--solid">看最新文章 ↓</a>
+      </div>
+    )}
   </div>
 </section>

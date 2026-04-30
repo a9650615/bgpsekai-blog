@@ -80,7 +80,7 @@
 - [x] 8.6 `src/components/PostMeta.astro`:byline(author + date + reading time + tags)
 - [x] 8.7 `src/components/Giscus.astro`:留言 widget(只有 post page 引用)
 - [x] 8.8 `src/styles/global.css`:base typography、accent `#19185d`、響應式
-- [ ] 8.9 比對原站 5 篇代表文章視覺,確認字體大小、間距 ±5% 內 — *進行中:當前 v1 theme 過於單調,正在 v2 升級(hero / dark mode / tag colors / 視覺密度)*
+- [x] 8.9 比對原站 5 篇代表文章視覺,確認字體大小、間距 ±5% 內 — *Theme v3 faithful Casper port (commit 0422009):tokens、hero-with-picture cover、m-article-card,視覺貼近原站*
 
 ## 9. 整合(AdSense / CF Analytics / Giscus / Pagefind)
 

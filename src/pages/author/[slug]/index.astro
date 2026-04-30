@@ -12,6 +12,7 @@
 import type { GetStaticPaths } from 'astro';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/Hero.astro';
 import PostCard from '../../../components/PostCard.astro';
 import authorsRaw from '../../../../import-cache/authors.json';
 
@@ -53,33 +54,16 @@ const showBio =
   canonicalPath={`/author/${author.slug}/`}
   ogType="website"
 >
+  <Hero
+    title={author.name}
+    description={showBio ? author.bio! : `共 ${posts.length} 篇文章`}
+    showCta={false}
+  />
+
   <div class="l-wrap">
-    <header class="author-page__header">
-      <h1 class="author-page__name">{author.name}</h1>
-      {showBio && <p class="author-page__bio">{author.bio}</p>}
-      <p class="author-page__count">共 {posts.length} 篇文章</p>
-    </header>
+    <h2 class="section-title">文章列表</h2>
     <section class="post-grid">
       {posts.map((p) => <PostCard entry={p} />)}
     </section>
   </div>
 </BaseLayout>
-
-<style>
-  .author-page__header {
-    padding: 2rem 0 0.5rem;
-  }
-  .author-page__name {
-    margin: 0 0 0.5rem;
-  }
-  .author-page__bio {
-    color: var(--fg-muted, #555);
-    margin: 0 0 0.5rem;
-    white-space: pre-line;
-  }
-  .author-page__count {
-    color: var(--fg-muted, #888);
-    font-size: 0.9em;
-    margin: 0;
-  }
-</style>

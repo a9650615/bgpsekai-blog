@@ -7,6 +7,7 @@
 import type { GetStaticPaths } from 'astro';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/Hero.astro';
 import PostCard from '../../../components/PostCard.astro';
 import Pagination from '../../../components/Pagination.astro';
 import tagsData from '../../../data/tags.json';
@@ -51,27 +52,17 @@ const { tag, posts, totalPages } = Astro.props;
   canonicalPath={`/tag/${tag.slug}/`}
   ogType="website"
 >
+  <Hero
+    title={tag.name}
+    description={tag.description ?? `所有「${tag.name}」相關文章。`}
+    showCta={false}
+  />
+
   <div class="l-wrap">
-    <header class="tag-page__header">
-      <h1 class="tag-page__title">{tag.name}</h1>
-      {tag.description && <p class="tag-page__desc">{tag.description}</p>}
-    </header>
+    <h2 class="section-title">文章列表</h2>
     <section class="post-grid">
       {posts.map((p) => <PostCard entry={p} />)}
     </section>
     <Pagination currentPage={1} totalPages={totalPages} basePath={url(`/tag/${tag.slug}/`)} />
   </div>
 </BaseLayout>
-
-<style>
-  .tag-page__header {
-    padding: 2rem 0 0.5rem;
-  }
-  .tag-page__title {
-    margin: 0 0 0.25rem;
-  }
-  .tag-page__desc {
-    color: var(--fg-muted, #666);
-    margin: 0;
-  }
-</style>
