@@ -5,6 +5,7 @@
 // "Comments hidden elsewhere" (Giscus only on posts).
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
 
 const pages = await getCollection('pages');
 const entry = pages.find((p) => p.slug === 'about-me');
@@ -13,7 +14,7 @@ if (!entry) {
 }
 
 const { Content } = await entry.render();
-const { title, excerpt } = entry.data;
+const { title, excerpt, featureImage } = entry.data;
 ---
 
 <BaseLayout
@@ -23,22 +24,16 @@ const { title, excerpt } = entry.data;
   ogType="website"
   showGiscus={false}
 >
-  <article class="page l-wrap">
-    <header class="page__header">
-      <h1 class="page__title">{title}</h1>
-    </header>
+  <Hero
+    title={title}
+    description={excerpt}
+    cover={featureImage}
+    showCta={false}
+  />
+
+  <div class="l-wrap">
     <div class="prose">
       <Content />
     </div>
-  </article>
+  </div>
 </BaseLayout>
-
-<style>
-  .page {
-    padding: 2rem 0 3rem;
-  }
-  .page__title {
-    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-    margin: 0 0 1.5rem;
-  }
-</style>

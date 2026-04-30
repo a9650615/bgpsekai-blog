@@ -5,6 +5,7 @@
 //   * wrapped in BaseLayout (header/footer/AdSense/GA4 all come from there)
 //   * does NOT render Giscus
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
 import BahaDanmuTool from '../components/BahaDanmuTool.astro';
 
 const title = '巴哈動漫瘋彈幕轉 ASS 工具 - 柏狗屁世界';
@@ -17,5 +18,13 @@ const description = '把巴哈動漫瘋的影片彈幕轉成 ASS 外掛字幕,�
   canonicalPath="/baha-danmu-to-ass/"
   showGiscus={false}
 >
-  <BahaDanmuTool />
+  <Hero
+    title="巴哈動漫瘋彈幕轉 ASS 工具"
+    description={description}
+    showCta={false}
+  />
+
+  <div class="l-wrap">
+    <BahaDanmuTool />
+  </div>
 </BaseLayout>
