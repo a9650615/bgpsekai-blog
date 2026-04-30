@@ -1,8 +1,16 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import tagsData from '../data/tags.json';
 import { url } from '../utils/url.ts';
 import { tagStyle } from '../utils/tagColor.ts';
+
+interface TagRecord {
+  slug: string;
+  originalSlug: string;
+  name: string;
+  description?: string;
+}
 
 interface Props {
   entry: CollectionEntry<'posts'>;
@@ -22,7 +30,13 @@ const dateStr = pubDate.toLocaleDateString('zh-TW', {
 const charCount = (excerpt ?? title).length;
 const readingTime = Math.max(1, Math.ceil(charCount / 500));
 
-const primaryTag = tags?.[0];
+const tagsBySlug = new Map<string, TagRecord>(
+  (tagsData as TagRecord[]).map((t) => [t.slug, t]),
+);
+const primaryTagSlug = tags?.[0];
+const primaryTagLabel = primaryTagSlug
+  ? tagsBySlug.get(primaryTagSlug)?.name ?? primaryTagSlug
+  : null;
 ---
 
 <article class:list={['post-card', variant === 'wide' && 'post-card--wide']}>
@@ -37,9 +51,9 @@ const primaryTag = tags?.[0];
           loading="lazy"
           decoding="async"
         />
-        {primaryTag && (
-          <span class="post-card__tag-flag" style={tagStyle(primaryTag)}>
-            {primaryTag}
+        {primaryTagSlug && primaryTagLabel && (
+          <span class="post-card__tag-flag" style={tagStyle(primaryTagSlug)}>
+            {primaryTagLabel}
           </span>
         )}
       </div>
