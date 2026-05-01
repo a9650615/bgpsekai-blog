@@ -4,16 +4,20 @@ import { fetchDanmu, buildDanmuUrl } from '../api.ts';
 import type { FetchLike } from '../api.ts';
 import type { DanmuItem } from '../types.ts';
 
-test('buildDanmuUrl default uses corsproxy.io', () => {
+test('buildDanmuUrl default uses self-hosted CF worker', () => {
   const url = buildDanmuUrl(15577);
-  assert.ok(url.includes('corsproxy.io'));
-  assert.match(url, /videoSn=15577/);
-  assert.match(url, /geo=TW%2CHK/);
-  assert.match(url, /limit=9999/);
+  assert.ok(url.includes('workers.dev'));
+  assert.ok(url.includes('15577'));
 });
 
-test('buildDanmuUrl proxyIndex=1 uses allorigins', () => {
+test('buildDanmuUrl proxyIndex=1 uses corsproxy.io', () => {
   const url = buildDanmuUrl(15577, 1);
+  assert.ok(url.includes('corsproxy.io'));
+  assert.match(url, /videoSn=15577/);
+});
+
+test('buildDanmuUrl proxyIndex=2 uses allorigins', () => {
+  const url = buildDanmuUrl(15577, 2);
   assert.ok(url.includes('allorigins.win'));
   assert.ok(url.includes('15577'));
 });

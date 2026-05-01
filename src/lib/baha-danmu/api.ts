@@ -2,9 +2,12 @@ import type { DanmuApiResponse, DanmuItem } from './types.js';
 
 const BAHA_API = 'https://api.gamer.com.tw/anime/v1/danmu.php';
 
-const PROXY_BUILDERS: Array<(target: string) => string> = [
-  (t) => `https://corsproxy.io/?${t}`,
-  (t) => `https://api.allorigins.win/raw?url=${encodeURIComponent(t)}`,
+type ProxyBuilder = (sn: number) => string;
+
+const PROXY_BUILDERS: ProxyBuilder[] = [
+  (sn) => `https://baha-cors-proxy.a9650615.workers.dev/?sn=${sn}`,
+  (sn) => `https://corsproxy.io/?${BAHA_API}?videoSn=${sn}&geo=TW%2CHK&limit=9999`,
+  (sn) => `https://api.allorigins.win/raw?url=${encodeURIComponent(`${BAHA_API}?videoSn=${sn}&geo=TW%2CHK&limit=9999`)}`,
 ];
 
 export type FetchLike = (
@@ -16,11 +19,10 @@ export function buildDanmuUrl(sn: number, proxyIndex = 0): string {
   if (!Number.isInteger(sn) || sn <= 0) {
     throw new RangeError(`fetchDanmu: invalid sn ${String(sn)}`);
   }
-  const target = `${BAHA_API}?videoSn=${sn}&geo=TW%2CHK&limit=9999`;
   if (proxyIndex < PROXY_BUILDERS.length) {
-    return PROXY_BUILDERS[proxyIndex](target);
+    return PROXY_BUILDERS[proxyIndex](sn);
   }
-  return target;
+  return `${BAHA_API}?videoSn=${sn}&geo=TW%2CHK&limit=9999`;
 }
 
 export async function fetchDanmu(
