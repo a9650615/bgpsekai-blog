@@ -9,7 +9,7 @@ export type {
 } from './types.js';
 
 export { extractSn } from './url.js';
-export { fetchDanmu, buildDanmuUrl, DANMU_ENDPOINT_BASE } from './api.js';
+export { fetchDanmu, buildDanmuUrl } from './api.js';
 export { formatTimeCs, formatTimeDs, formatTimeDsRaw } from './format.js';
 export { pickStyle, buildColorStyle } from './style.js';
 export { buildTemplate, resolveOptions, DEFAULT_OPTIONS } from './template.js';
