@@ -38,7 +38,7 @@ app\\Http\\routes.php：
 
 會得到這樣的結果：
 
-![1](https://bgpsekai.thisistap.com/wp-content/uploads/2016/04/1-500x269.png)
+<!-- removed: dead image https://bgpsekai.thisistap.com/wp-content/uploads/2016/04/1-500x269.png -->
 
 你會發現，id傳不進Controller，Why？
 
@@ -48,7 +48,7 @@ app\\Http\\routes.php：
 
 `<code class="EnlighterJSRAW" data-enlighter-language="php">Route::resource('/test', 'TestController');`
 
-![2](https://bgpsekai.thisistap.com/wp-content/uploads/2016/04/2-500x269.jpg)
+<!-- removed: dead image https://bgpsekai.thisistap.com/wp-content/uploads/2016/04/2-500x269.jpg -->
 
 這樣，昨天的範例會有兩個問題：
 

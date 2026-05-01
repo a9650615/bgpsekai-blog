@@ -34,11 +34,11 @@ const port = 3000; const spdy = require('spdy'); const express = require('expres
 
 載入一般的http的話是這個畫面
 
-![1](https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/1-500x168.jpg)
+<!-- removed: dead image https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/1-500x168.jpg -->
 
 https
 
-![2](https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/2-500x237.png)
+<!-- removed: dead image https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/2-500x237.png -->
 
 繼續前往囉
 
@@ -48,7 +48,7 @@ https
 
 現在先來解決這個假的http/2
 
-![3](https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/3-489x500.png)
+<!-- removed: dead image https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/3-489x500.png -->
 
 稍微研究了一下原因：請移駕至下方文件【谷歌瀏覽器 HTTP/2 降級回 HTTP/1.1？】
 
@@ -56,7 +56,7 @@ https
 
 最簡單的解決方法：使用node.js v6 (可以參考下方倒數的兩篇文章)
 
-![5](https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/5-489x500.png)
+<!-- removed: dead image https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/5-489x500.png -->
 
 有沒有，成功了。
 
@@ -72,7 +72,7 @@ https
 
 選取”將所有憑證放入以下的存放區”，選取”受信任的根憑證授權單位”，重啟瀏覽器。
 
-![1](https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/1.png)
+<!-- removed: dead image https://bgpsekai.thisistap.com/wp-content/uploads/2016/08/1.png -->
 
 其實有點欺騙自己的感覺…
 

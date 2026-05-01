@@ -20,7 +20,7 @@ excerpt: "原本是想幫 RX 560 AERO ITX 4G OC開箱的，不過後來因為懶
 ![](../../assets/blog/content/images/2017/10/P6290319.jpg)
 
 先說結論答案: 474尾燈都看不到(遊戲上)  
-[![](../../assets/blog/content/images/2017/10/P6290320-200x200.jpg)](https://bgpsekai.thisistap.com/%e6%95%97%e5%ae%b6%e6%97%a5%e8%a8%98/2017/10/%e9%96%8b%e7%ae%b1-%e5%9b%9e%e6%86%b6%e7%9a%84rx560%e9%96%8b%e7%ae%b1/attachment/p6290320/) 亂 [![](../../assets/blog/content/images/2017/10/P6290321-200x200.jpg)](https://bgpsekai.thisistap.com/%e6%95%97%e5%ae%b6%e6%97%a5%e8%a8%98/2017/10/%e9%96%8b%e7%ae%b1-%e5%9b%9e%e6%86%b6%e7%9a%84rx560%e9%96%8b%e7%ae%b1/attachment/p6290321/) 拍 [![](https://blog.bgpsekai.club/content/images/2017/10/P6290322-200x200.jpg)](https://bgpsekai.thisistap.com/%e6%95%97%e5%ae%b6%e6%97%a5%e8%a8%98/2017/10/%e9%96%8b%e7%ae%b1-%e5%9b%9e%e6%86%b6%e7%9a%84rx560%e9%96%8b%e7%ae%b1/attachment/p6290322/) 的 而原本以為有留一些效能數據的結果沒留… 囧- - - - - -
+[![](../../assets/blog/content/images/2017/10/P6290320-200x200.jpg)](https://bgpsekai.thisistap.com/%e6%95%97%e5%ae%b6%e6%97%a5%e8%a8%98/2017/10/%e9%96%8b%e7%ae%b1-%e5%9b%9e%e6%86%b6%e7%9a%84rx560%e9%96%8b%e7%ae%b1/attachment/p6290320/) 亂 [![](../../assets/blog/content/images/2017/10/P6290321-200x200.jpg)](https://bgpsekai.thisistap.com/%e6%95%97%e5%ae%b6%e6%97%a5%e8%a8%98/2017/10/%e9%96%8b%e7%ae%b1-%e5%9b%9e%e6%86%b6%e7%9a%84rx560%e9%96%8b%e7%ae%b1/attachment/p6290321/) 拍 <!-- removed: dead image https://blog.bgpsekai.club/content/images/2017/10/P6290322-200x200.jpg --> 的 而原本以為有留一些效能數據的結果沒留… 囧- - - - - -
 
 以回憶開箱，僅供參考Bios Max power limit 48W，耗電表現蠻好的基本上，雙挖來測試 (燒機神器)風扇 34%左右 1500轉左右 溫度 72C 超涼的但最高可以到4300轉? 吹風機?記憶體 超不上去 頂多+35mhz挖礦ETH :12Mh/s + DCR :330Mh/s 功耗54W上下(懶得壓)就真的是470的一半- - - - - -
 

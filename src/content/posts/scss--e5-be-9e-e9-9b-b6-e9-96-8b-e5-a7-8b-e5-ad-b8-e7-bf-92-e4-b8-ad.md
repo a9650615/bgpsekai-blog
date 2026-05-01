@@ -16,7 +16,7 @@ excerpt: "[vc_row][vc_column][vc_column_text]scss 是後期的 sass 具有css的
 
 可以用更簡單的作法做出一樣的效果，但花的時間就ㄏㄏ
 
-![yooo](https://birdyo.ddns.net/blog/wp-content/uploads/2016/05/yooo-500x235.png)
+<!-- removed: dead image https://birdyo.ddns.net/blog/wp-content/uploads/2016/05/yooo-500x235.png -->
 
 這眼鏡長的真突兀（X
 

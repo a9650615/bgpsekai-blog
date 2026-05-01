@@ -7,7 +7,7 @@ tags:
   - laravel
   - nginx
 updatedDate: 2016-04-14T07:04:07.000+08:00
-featureImage: https://bgpsekai.thisistap.com/wp-content/uploads/2016/04/2014-4-11-installlaravelerror.png
+# featureImage removed: dead image https://bgpsekai.thisistap.com/wp-content/uploads/2016/04/2014-4-11-installlaravelerror.png
 excerpt: "[vc_row][vc_column][vc_column_text]今天使用 laravel v1.3.2的 installer 安裝 laravel 之後 new 了一個 project，結果出現了詭異的問題。 > TTY mode is not supported on windows platform. 難道是 windows 的錯!? 結果看來不是，因該是 laravel 1.3.2 installer 的 bug 。 [https://birdyo.ddns.net/blog/wp-content/uploads/2016/04/2014-4-11-installlaravelfind.png] 解法 composer create-project --prefer-dist laravel/laravel blog [/vc_column_text][/vc_column][/vc_row][vc_row][vc_column][vc_text_separator title=”nginx 配置檔”][vc_column_text] server"
 ---
 
@@ -19,7 +19,7 @@ excerpt: "[vc_row][vc_column][vc_column_text]今天使用 laravel v1.3.2的 inst
 
 結果看來不是，因該是 laravel 1.3.2 installer 的 bug 。
 
-[![2014-4-11-installlaravelfind](https://birdyo.ddns.net/blog/wp-content/uploads/2016/04/2014-4-11-installlaravelfind-500x171.png)](https://birdyo.ddns.net/blog/wp-content/uploads/2016/04/2014-4-11-installlaravelfind.png)
+<!-- removed: dead image https://birdyo.ddns.net/blog/wp-content/uploads/2016/04/2014-4-11-installlaravelfind-500x171.png -->
 
 解法
 
