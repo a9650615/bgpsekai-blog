@@ -867,6 +867,9 @@ img {
 
 /* ===== Pagefind UI tweaks (header search) ===== */
 
+.site-header__search {
+  position: relative;
+}
 .pagefind-ui--header {
   font-size: 0.9rem;
   --pagefind-ui-primary: var(--primary-subtle-color);
@@ -876,6 +879,20 @@ img {
   --pagefind-ui-border-radius: var(--radius);
   --pagefind-ui-border-width: 1px;
   --pagefind-ui-font: inherit;
+}
+.pagefind-ui--header .pagefind-ui__drawer {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: max(100%, 420px);
+  max-height: 70vh;
+  overflow-y: auto;
+  background: var(--background-color);
+  border: 1px solid var(--secondary-border-color);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  padding: 0.75rem 1rem;
 }
 
 /* ===== Layout containers ===== */
