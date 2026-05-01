@@ -6,7 +6,7 @@ import type { DanmuItem } from '../types.ts';
 
 test('buildDanmuUrl default uses self-hosted CF worker', () => {
   const url = buildDanmuUrl(15577);
-  assert.ok(url.includes('workers.dev'));
+  assert.ok(url.includes('baha-cors-proxy'));
   assert.ok(url.includes('15577'));
 });
 

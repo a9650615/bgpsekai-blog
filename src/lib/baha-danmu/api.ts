@@ -5,7 +5,7 @@ const BAHA_API = 'https://api.gamer.com.tw/anime/v1/danmu.php';
 type ProxyBuilder = (sn: number) => string;
 
 const PROXY_BUILDERS: ProxyBuilder[] = [
-  (sn) => `https://baha-cors-proxy.a9650615.workers.dev/?sn=${sn}`,
+  (sn) => `https://baha-cors-proxy.ott-selecter-dev.workers.dev/?sn=${sn}`,
   (sn) => `https://corsproxy.io/?${BAHA_API}?videoSn=${sn}&geo=TW%2CHK&limit=9999`,
   (sn) => `https://api.allorigins.win/raw?url=${encodeURIComponent(`${BAHA_API}?videoSn=${sn}&geo=TW%2CHK&limit=9999`)}`,
 ];
