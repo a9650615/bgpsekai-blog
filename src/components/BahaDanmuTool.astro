@@ -4,9 +4,7 @@
 // script `BahaDanmuTool.client.ts`, loaded as an ES module script tag.
 ---
 
-<section class="baha-danmu-tool" data-baha-danmu-tool aria-labelledby="baha-tool-heading">
-  <h1 id="baha-tool-heading">巴哈動漫瘋彈幕轉 ASS 工具</h1>
-
+<section class="baha-danmu-tool" data-baha-danmu-tool aria-label="巴哈彈幕轉 ASS 工具">
   <p class="baha-danmu-tool__hint">
     將動漫瘋影片頁網址 (含 <code>sn=</code>) 或純 SN 數字貼到下方輸入框,按「取得」即可下載 ASS 字幕。
     範例: <code>https://ani.gamer.com.tw/animeVideo.php?sn=15577</code>
@@ -44,14 +42,6 @@
     <a id="baha-download" class="baha-danmu-tool__download" hidden>下載 ASS</a>
   </p>
 
-  <section class="baha-danmu-tool__notes">
-    <h2>使用說明</h2>
-    <ul>
-      <li>建議搭配 PotPlayer 並將彈幕字幕拖進第二字幕。</li>
-      <li>本工具透過第三方 <code>corsproxy.io</code> 中繼存取巴哈 API,該服務若停擺工具會無法運作。</li>
-      <li>新版巴哈 API 限制非登入用戶取得完整彈幕,因此部份較新動畫可能拿到空陣列。</li>
-    </ul>
-  </section>
 </section>
 
 <script>
@@ -65,12 +55,6 @@
     margin: 2rem auto;
     padding: 1.5rem;
     line-height: 1.6;
-  }
-
-  .baha-danmu-tool h1 {
-    margin: 0 0 0.5rem;
-    color: var(--titles-color);
-    font-size: 1.5rem;
   }
 
   .baha-danmu-tool__hint {
@@ -178,22 +162,4 @@
   }
   .baha-danmu-tool__download:hover { background: #258025; }
 
-  .baha-danmu-tool__notes {
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--secondary-border-color);
-    font-size: 0.95rem;
-    color: var(--primary-foreground-color);
-  }
-  .baha-danmu-tool__notes h2 {
-    font-size: 1.1rem;
-    margin: 0 0 0.5rem;
-    color: var(--titles-color);
-  }
-  .baha-danmu-tool__notes code {
-    background: var(--secondary-subtle-color);
-    padding: 0.1em 0.35em;
-    border-radius: 4px;
-    font-size: 0.9em;
-  }
 </style>
