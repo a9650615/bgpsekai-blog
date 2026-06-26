@@ -1,11 +1,10 @@
 ---
-// /about-me/ — content-collection page (NOT a post → no Giscus).
-//
-// Spec ref: blog-rendering "Content page route renders" + url-and-integrations
-// "Comments hidden elsewhere" (Giscus only on posts).
+// /about-me/ — content-collection page. Carries Giscus so visitors have a
+// place to leave site-wide feedback (not just per-post).
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
+import Giscus from '../components/Giscus.astro';
 
 const pages = await getCollection('pages');
 const entry = pages.find((p) => p.slug === 'about-me');
@@ -34,5 +33,7 @@ const { title, excerpt, featureImage } = entry.data;
     <div class="prose">
       <Content />
     </div>
+
+    <Giscus />
   </div>
 </BaseLayout>

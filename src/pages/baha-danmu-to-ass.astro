@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import BahaDanmuTool from '../components/BahaDanmuTool.astro';
+import Giscus from '../components/Giscus.astro';
+import bannerImage from '../assets/blog/content/images/2020/06/3KDAYtE.png';
 
 const title = '巴哈動漫瘋彈幕轉 ASS 工具 - 柏狗屁世界';
 const description = '把巴哈動漫瘋的影片彈幕轉成 ASS 外掛字幕,搭配 PotPlayer / mpv 播放。';
@@ -13,6 +15,7 @@ const description = '把巴哈動漫瘋的影片彈幕轉成 ASS 外掛字幕,�
   canonicalPath="/baha-danmu-to-ass/"
 >
   <Hero
+    cover={bannerImage}
     title="巴哈動漫瘋彈幕轉 ASS 工具"
     description={description}
     showCta={false}
@@ -149,5 +152,7 @@ const description = '把巴哈動漫瘋的影片彈幕轉成 ASS 外掛字幕,�
       </ul>
       <p>有任何問題歡迎來信 <a href="mailto:a9650615@gmail.com">a9650615@gmail.com</a></p>
     </section>
+
+    <Giscus />
   </div>
 </BaseLayout>
