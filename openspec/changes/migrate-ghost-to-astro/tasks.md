@@ -86,9 +86,9 @@
 
 - [x] 9.1 `BaseLayout` 注入 AdSense `<script async src="...?client=ca-pub-9488921689181013" crossorigin="anonymous">`
 - [x] 9.2 build 後 grep 確認:0 個 `UA-51767762-4` 字串、0 個 `<amp-` 元素、0 個 `cdn.ampproject.org` 引用;`googletagmanager.com` 引用必須只有 GA4 `?id=G-` 形式
-- [ ] 9.3 **(blocker — 使用者需先於 GA 後台建立 GA4 屬性)** 取得 measurement ID 寫入環境變數 `PUBLIC_GA4_MEASUREMENT_ID`,在 BaseLayout `<head>` 注入 `<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX">` + 對應的 inline `gtag('config', ...)` 區塊
+- [x] 9.3 取得 measurement ID 寫入環境變數 `PUBLIC_GA4_MEASUREMENT_ID`,在 BaseLayout `<head>` 注入 `<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX">` + 對應的 inline `gtag('config', ...)` 區塊 — *2026-06-26 GA4 屬性 "Bgpsekai" 建立完成,measurement id `G-X97GR9TJQG` 已寫入 GitHub repo secret `PUBLIC_GA4_MEASUREMENT_ID`;BaseLayout 已有 conditional 注入(`src/layouts/BaseLayout.astro:144-152`)。GA 後台串流網址目前為 `https://bgpsekai.club`,建議改成 `https://blog.bgpsekai.club` 與實際站台一致*
 - [ ] 9.3.P2 **(Phase 2)** 在 CF dashboard 啟用 Web Analytics 拿 token,寫入 `PUBLIC_CF_BEACON_TOKEN`,beacon 注入 BaseLayout 與 GA4 共存(雙寫 metrics)
-- [ ] 9.4 在本 Astro repo 啟用 GitHub Discussions、Giscus 註冊填入 `data-repo` / `data-repo-id` / `data-category-id`,僅在 `[slug].astro` render Giscus component — *blocked:需要 enable Discussions + 安裝 Giscus app 拿 ids*
+- [x] 9.4 在本 Astro repo 啟用 GitHub Discussions、Giscus 註冊填入 `data-repo` / `data-repo-id` / `data-category-id`,僅在 `[slug].astro` render Giscus component — *2026-06-26 已啟用 Discussions、安裝 Giscus app、設定 mapping=pathname、category=Announcements;`src/components/Giscus.astro` 已填入 repoId=`R_kgDOSPi-eA` / categoryId=`DIC_kwDOSPi-eM4C_8of`*
 - [x] 9.5 `astro-pagefind` integration 設好,確認 `dist/pagefind/` build 後存在
 - [x] 9.6 Pagefind UI 嵌進 Header,在 BaseLayout 為 footer / nav 加 `data-pagefind-ignore`
 
@@ -101,10 +101,10 @@
 
 ## 11. CI / Deploy
 
-- [~] 11.1 `.github/workflows/deploy.yml`:`actions/checkout` → `actions/setup-node@v4` (node 22) → `npm ci` → `npm run build` → `npx wrangler pages deploy dist --project-name=...` — *workflow 寫好但 push trigger 暫時 disable(commit 429a87b),等 §11.2/§11.3 完成才開回去*
-- [ ] 11.2 GitHub Secrets:`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID`、`PUBLIC_GA4_MEASUREMENT_ID`、`GHOST_URL`、`GHOST_CONTENT_KEY`、`GHOST_ADMIN_KEY`(後三者只有 import 階段需要,deploy 階段不用);Phase 2 再加 `PUBLIC_CF_BEACON_TOKEN` — *blocked:需要 CF 帳號擁有人去 dashboard 拿 token*
-- [ ] 11.3 在 Cloudflare 建立 Pages 專案,設定 production branch = `main`、preview = 其他 branch — *blocked:同 11.2*
-- [ ] 11.4 第一次 deploy 到 `*.pages.dev` 預覽,跑視覺檢查 — *blocked:同 11.2*
+- [x] 11.1 `.github/workflows/deploy.yml`:`actions/checkout` → `actions/setup-node@v4` (node 22) → `npm ci` → `npm run build` → `cloudflare/pages-action@v1` — *push trigger 已於 2026-06-26 重新啟用,§11.2/§11.3 完成*
+- [x] 11.2 GitHub Secrets:`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID`、`PUBLIC_GA4_MEASUREMENT_ID` 三者已寫入 repo secrets(2026-06-26);Ghost trio 不放 CI(只本機 import 用);Phase 2 才加 `PUBLIC_CF_BEACON_TOKEN`
+- [x] 11.3 在 Cloudflare 建立 Pages 專案 `bgpsekai-blog`,production branch = `main`(2026-06-26 透過 `wrangler pages project create` 建立)
+- [x] 11.4 第一次 deploy 到 `https://bgpsekai-blog.pages.dev/` 預覽 — 2026-06-26 workflow_dispatch run 28251198791 ✓ 2m20s,首頁 HTTP 200,title `柏狗屁世界`
 
 ### 11.5 GitHub Pages preview(本 spec 外加,非 CF 替代)
 

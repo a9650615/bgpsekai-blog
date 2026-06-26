@@ -1,11 +1,6 @@
 ---
 // Giscus comments widget. Per spec only enabled on post pages (and never on
 // home / tag / author / about-me / baha-danmu-to-ass).
-//
-// TODO §9.4: replace placeholder `data-repo-id` / `data-category-id` with real
-// values once the Astro repo is pushed to GitHub and registered with Giscus.
-// Until then we render the script tag with placeholders so the markup is
-// production-shaped but it will simply not render comments.
 
 interface Props {
   enabled?: boolean;
@@ -14,10 +9,10 @@ interface Props {
 const { enabled = false } = Astro.props;
 
 const config = {
-  repo: 'MingYou/blog',
-  repoId: 'TODO_GISCUS_REPO_ID',
+  repo: 'a9650615/bgpsekai-blog',
+  repoId: 'R_kgDOSPi-eA',
   category: 'Announcements',
-  categoryId: 'TODO_GISCUS_CATEGORY_ID',
+  categoryId: 'DIC_kwDOSPi-eM4C_8of',
 };
 ---
 
