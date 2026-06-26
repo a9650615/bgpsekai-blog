@@ -1,12 +1,9 @@
 ---
-// Giscus comments widget. Per spec only enabled on post pages (and never on
-// home / tag / author / about-me / baha-danmu-to-ass).
-
-interface Props {
-  enabled?: boolean;
-}
-
-const { enabled = false } = Astro.props;
+// Giscus comments widget. Mounted directly by post pages; not by BaseLayout.
+// Theme is mirrored from `<html data-theme>` (not the system preference), so
+// the iframe never goes dark while the site stays in light mode (or vice
+// versa). When the user flips the site theme toggle, a MutationObserver
+// posts the new theme to the iframe.
 
 const config = {
   repo: 'a9650615/bgpsekai-blog',
@@ -16,25 +13,56 @@ const config = {
 };
 ---
 
-{enabled && (
-  <section class="giscus-wrapper" aria-label="留言">
-    <div class="giscus" data-pagefind-ignore></div>
-    <script
-      is:inline
-      src="https://giscus.app/client.js"
-      data-repo={config.repo}
-      data-repo-id={config.repoId}
-      data-category={config.category}
-      data-category-id={config.categoryId}
-      data-mapping="pathname"
-      data-strict="0"
-      data-reactions-enabled="1"
-      data-emit-metadata="0"
-      data-input-position="bottom"
-      data-theme="preferred_color_scheme"
-      data-lang="zh-TW"
-      data-loading="lazy"
-      crossorigin="anonymous"
-      async></script>
-  </section>
-)}
+<section class="giscus-wrapper" aria-label="留言" data-pagefind-ignore>
+  <div class="giscus"></div>
+</section>
+
+<script is:inline define:vars={{ config }}>
+  (function () {
+    const themeFor = () =>
+      document.documentElement.getAttribute('data-theme') === 'dark'
+        ? 'dark'
+        : 'light';
+
+    const host = document.currentScript.previousElementSibling;
+    if (!host) return;
+
+    const s = document.createElement('script');
+    s.src = 'https://giscus.app/client.js';
+    s.async = true;
+    s.crossOrigin = 'anonymous';
+    s.setAttribute('data-repo', config.repo);
+    s.setAttribute('data-repo-id', config.repoId);
+    s.setAttribute('data-category', config.category);
+    s.setAttribute('data-category-id', config.categoryId);
+    s.setAttribute('data-mapping', 'pathname');
+    s.setAttribute('data-strict', '0');
+    s.setAttribute('data-reactions-enabled', '1');
+    s.setAttribute('data-emit-metadata', '0');
+    s.setAttribute('data-input-position', 'bottom');
+    s.setAttribute('data-theme', themeFor());
+    s.setAttribute('data-lang', 'zh-TW');
+    s.setAttribute('data-loading', 'lazy');
+    host.appendChild(s);
+
+    new MutationObserver(() => {
+      const iframe = document.querySelector('iframe.giscus-frame');
+      if (!iframe || !iframe.contentWindow) return;
+      iframe.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: themeFor() } } },
+        'https://giscus.app',
+      );
+    }).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+  })();
+</script>
+
+<style>
+  .giscus-wrapper {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+  }
+</style>

@@ -10,6 +10,7 @@ import type { GetStaticPaths } from 'astro';
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Giscus from '../components/Giscus.astro';
 import tagsData from '../data/tags.json';
 import { tagStyle } from '../utils/tagColor.ts';
 import { url } from '../utils/url.ts';
@@ -72,7 +73,6 @@ const hasCover = featureImage && typeof featureImage !== 'string';
   featureImage={featureImage}
   ogType="article"
   publishDate={pubDate}
-  showGiscus={true}
 >
   <section
     class:list={[
@@ -131,6 +131,8 @@ const hasCover = featureImage && typeof featureImage !== 'string';
     <div class="prose post-page__body">
       <Content />
     </div>
+
+    <Giscus />
 
     <nav class="post-page__nav" aria-label="文章導覽">
       {older ? (

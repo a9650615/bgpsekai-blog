@@ -15,7 +15,6 @@
 // shows site title + nav, footer carries copyright + RSS link.
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import Giscus from '../components/Giscus.astro';
 import { url as baseUrl } from '../utils/url.ts';
 import '../styles/global.css';
 
@@ -26,7 +25,6 @@ interface Props {
   featureImage?: ImageMetadata | string;
   ogType?: 'website' | 'article';
   publishDate?: Date;
-  showGiscus?: boolean;
 }
 
 const {
@@ -36,7 +34,6 @@ const {
   featureImage,
   ogType = 'website',
   publishDate,
-  showGiscus = false,
 } = Astro.props;
 
 // `Astro.site` is the bare origin (no base), and `Astro.url.pathname` already
@@ -161,6 +158,5 @@ gtag('config', ga4Id);`}
       <slot />
     </main>
     <Footer />
-    {showGiscus && <Giscus enabled={true} />}
   </body>
 </html>
