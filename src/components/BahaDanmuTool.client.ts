@@ -4,6 +4,10 @@
 
 import { extractSn } from '../lib/baha-danmu/url.js';
 import { fetchDanmu } from '../lib/baha-danmu/api.js';
+import {
+  buildBrainrotSnUrl,
+  extractBrainrotSn,
+} from '../lib/baha-danmu/brainrot.js';
 import { generateAss } from '../lib/baha-danmu/generate.js';
 
 type Status = 'idle' | 'fetching' | 'parsing' | 'generating' | 'error' | 'done';
@@ -15,6 +19,7 @@ interface Refs {
   status: HTMLElement;
   error: HTMLElement;
   download: HTMLAnchorElement;
+  brainrotSn: HTMLAnchorElement;
 }
 
 const STATUS_LABEL: Record<Status, string> = {
@@ -43,6 +48,18 @@ function clearError(refs: Refs) {
   refs.error.hidden = true;
 }
 
+function hideBrainrotSn(refs: Refs) {
+  refs.brainrotSn.hidden = true;
+  refs.brainrotSn.textContent = '';
+  refs.brainrotSn.removeAttribute('href');
+}
+
+function showBrainrotSn(refs: Refs, sn: number) {
+  refs.brainrotSn.href = buildBrainrotSnUrl(sn);
+  refs.brainrotSn.textContent = `用 SN ${sn} 看腦腐現場分析 ↗`;
+  refs.brainrotSn.hidden = false;
+}
+
 function offerDownload(refs: Refs, sn: number, ass: string) {
   const blob = new Blob([ass], { type: 'application/octet-stream' });
   // Revoke any previous URL we created.
@@ -58,10 +75,12 @@ function offerDownload(refs: Refs, sn: number, ass: string) {
 
 async function handleSubmit(refs: Refs): Promise<void> {
   clearError(refs);
+  hideBrainrotSn(refs);
   refs.download.hidden = true;
   refs.button.disabled = true;
   try {
     const rawInput = refs.param.value;
+    const brainrotSn = extractBrainrotSn(rawInput);
     const offsetRaw = refs.offset.value;
     const offset = Number.parseInt(offsetRaw, 10);
     if (!Number.isFinite(offset)) {
@@ -83,8 +102,10 @@ async function handleSubmit(refs: Refs): Promise<void> {
     const ass = generateAss(items, { offset });
 
     offerDownload(refs, sn, ass);
+    if (brainrotSn !== null) showBrainrotSn(refs, brainrotSn);
     setStatus(refs, 'done');
   } catch (e) {
+    hideBrainrotSn(refs);
     showError(refs, (e as Error).message || '未知錯誤');
   } finally {
     refs.button.disabled = false;
@@ -102,11 +123,13 @@ function bind(): void {
     status: root.querySelector<HTMLElement>('#baha-status')!,
     error: root.querySelector<HTMLElement>('#baha-error')!,
     download: root.querySelector<HTMLAnchorElement>('#baha-download')!,
+    brainrotSn: root.querySelector<HTMLAnchorElement>('#baha-brainrot-sn')!,
   };
 
   setStatus(refs, 'idle');
   clearError(refs);
   refs.download.hidden = true;
+  hideBrainrotSn(refs);
 
   refs.button.addEventListener('click', (ev) => {
     ev.preventDefault();
@@ -118,6 +141,7 @@ function bind(): void {
       void handleSubmit(refs);
     }
   });
+  refs.param.addEventListener('input', () => hideBrainrotSn(refs));
 }
 
 if (document.readyState === 'loading') {
