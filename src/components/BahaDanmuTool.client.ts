@@ -60,6 +60,15 @@ function showBrainrotSn(refs: Refs, sn: number) {
   refs.brainrotSn.hidden = false;
 }
 
+function syncBrainrotSn(refs: Refs, rawInput: string) {
+  const sn = extractBrainrotSn(rawInput);
+  if (sn === null) {
+    hideBrainrotSn(refs);
+  } else {
+    showBrainrotSn(refs, sn);
+  }
+}
+
 function offerDownload(refs: Refs, sn: number, ass: string) {
   const blob = new Blob([ass], { type: 'application/octet-stream' });
   // Revoke any previous URL we created.
@@ -141,7 +150,9 @@ function bind(): void {
       void handleSubmit(refs);
     }
   });
-  refs.param.addEventListener('input', () => hideBrainrotSn(refs));
+  refs.param.addEventListener('input', () => {
+    syncBrainrotSn(refs, refs.param.value);
+  });
 }
 
 if (document.readyState === 'loading') {
