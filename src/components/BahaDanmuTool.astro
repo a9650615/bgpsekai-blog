@@ -2,7 +2,10 @@
 // Baha 彈幕 → ASS 工具 UI shell.
 // This is a static fragment; behaviour is provided by the colocated client
 // script `BahaDanmuTool.client.ts`, loaded as an ES module script tag.
-import { BRAINROT_HOME_URL } from '../lib/baha-danmu/brainrot';
+import {
+  BRAINROT_HOME_URL,
+  BRAINROT_PROMO_COPY,
+} from '../lib/baha-danmu/brainrot';
 ---
 
 <section class="baha-danmu-tool" data-baha-danmu-tool aria-label="巴哈彈幕轉 ASS 工具">
@@ -13,16 +16,16 @@ import { BRAINROT_HOME_URL } from '../lib/baha-danmu/brainrot';
 
   <aside class="baha-danmu-tool__promo" aria-labelledby="baha-brainrot-promo-title">
     <div>
-      <p class="baha-danmu-tool__promo-kicker">先看整體風向</p>
+      <p class="baha-danmu-tool__promo-kicker">{BRAINROT_PROMO_COPY.kicker}</p>
       <h2 id="baha-brainrot-promo-title">想看彈幕，但不想被劇透？</h2>
-      <p>先逛腦腐現場分析，快速看看作品的彈幕氣氛與觀眾反應；分析內容仍可能包含劇透。</p>
+      <p>{BRAINROT_PROMO_COPY.description}</p>
     </div>
     <a
       class="baha-danmu-tool__promo-link"
       href={BRAINROT_HOME_URL}
       target="_blank"
       rel="noopener noreferrer"
-    >先看腦腐現場分析 ↗</a>
+    >{BRAINROT_PROMO_COPY.link}</a>
   </aside>
 
   <form class="baha-danmu-tool__form" onsubmit="return false;">
@@ -73,10 +76,12 @@ import { BRAINROT_HOME_URL } from '../lib/baha-danmu/brainrot';
 
 <style>
   .baha-danmu-tool {
-    max-width: 720px;
+    width: min(100%, 1008px);
+    max-width: 1008px;
     margin: 2rem auto;
-    padding: 1.5rem;
+    padding: 1.5rem 1rem;
     line-height: 1.6;
+    overflow-x: clip;
   }
 
   .baha-danmu-tool__hint {
@@ -104,6 +109,10 @@ import { BRAINROT_HOME_URL } from '../lib/baha-danmu/brainrot';
     border-radius: var(--radius, 8px);
     background: var(--background-color);
   }
+  .baha-danmu-tool__promo > div {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
   .baha-danmu-tool__promo p,
   .baha-danmu-tool__promo h2 { margin: 0; }
   .baha-danmu-tool__promo-kicker {
@@ -127,15 +136,18 @@ import { BRAINROT_HOME_URL } from '../lib/baha-danmu/brainrot';
     font-weight: 700;
     text-decoration: none;
   }
-  .baha-danmu-tool__promo-link { white-space: nowrap; }
+  .baha-danmu-tool__promo-link {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
   .baha-danmu-tool__promo-link:hover,
   .baha-danmu-tool__sn-link:hover { text-decoration: underline; }
 
   .baha-danmu-tool__form {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 8.75rem auto;
     gap: 0.75rem;
-    align-items: flex-end;
+    align-items: start;
     margin-bottom: 1rem;
     padding: 1.25rem;
     background: var(--secondary-subtle-color);
@@ -145,10 +157,7 @@ import { BRAINROT_HOME_URL } from '../lib/baha-danmu/brainrot';
   .baha-danmu-tool__field {
     display: flex;
     flex-direction: column;
-    flex: 1 1 240px;
-  }
-  .baha-danmu-tool__field--narrow {
-    flex: 0 0 140px;
+    min-width: 0;
   }
   .baha-danmu-tool__field span {
     font-size: 0.85rem;
@@ -157,6 +166,7 @@ import { BRAINROT_HOME_URL } from '../lib/baha-danmu/brainrot';
     margin-bottom: 0.35rem;
   }
   .baha-danmu-tool__field input {
+    min-width: 0;
     padding: 0.6rem 0.75rem;
     border: 1px solid var(--primary-border-color);
     border-radius: var(--radius, 8px);
@@ -174,8 +184,10 @@ import { BRAINROT_HOME_URL } from '../lib/baha-danmu/brainrot';
   }
   .baha-danmu-tool__sn-link {
     display: block;
+    max-width: 100%;
     margin-top: 0.4rem;
     font-size: 0.9rem;
+    overflow-wrap: anywhere;
   }
 
   .baha-danmu-tool__submit {
@@ -187,7 +199,7 @@ import { BRAINROT_HOME_URL } from '../lib/baha-danmu/brainrot';
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    flex: 0 0 auto;
+    margin-top: 1.7rem;
     transition: background 0.15s ease, transform 0.1s ease;
   }
   .baha-danmu-tool__submit:hover:not(:disabled) {
@@ -228,15 +240,20 @@ import { BRAINROT_HOME_URL } from '../lib/baha-danmu/brainrot';
   }
   .baha-danmu-tool__download:hover { background: #258025; }
 
-  @media (max-width: 640px) {
+  @media (max-width: 760px) {
     .baha-danmu-tool { padding: 1rem 0.75rem; }
     .baha-danmu-tool__promo {
       align-items: flex-start;
       flex-direction: column;
     }
     .baha-danmu-tool__promo-link { white-space: normal; }
-    .baha-danmu-tool__field--narrow { flex-basis: 100%; }
-    .baha-danmu-tool__submit { flex-basis: 100%; }
+    .baha-danmu-tool__form {
+      grid-template-columns: 1fr;
+    }
+    .baha-danmu-tool__submit {
+      width: 100%;
+      margin-top: 0;
+    }
   }
 
 </style>

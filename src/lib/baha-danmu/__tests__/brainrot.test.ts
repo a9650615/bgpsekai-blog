@@ -2,12 +2,26 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   BRAINROT_HOME_URL,
+  BRAINROT_PROMO_COPY,
   buildBrainrotSnUrl,
   extractBrainrotSn,
 } from '../brainrot.ts';
 
 test('brainrot links use the public home page for the generic CTA', () => {
   assert.equal(BRAINROT_HOME_URL, 'https://danmu.bgpsekai.club/');
+});
+
+test('brainrot promo copy tells spoiler-sensitive visitors to watch first', () => {
+  assert.equal(
+    BRAINROT_PROMO_COPY.description,
+    '如果不想被劇透，請先看完作品，再回來腦腐現場看分析。'
+  );
+  assert.equal(
+    BRAINROT_PROMO_COPY.link,
+    '看完作品，再回來看腦腐現場分析 ↗'
+  );
+  assert.doesNotMatch(BRAINROT_PROMO_COPY.description, /先逛腦腐現場|先看腦腐現場/);
+  assert.doesNotMatch(BRAINROT_PROMO_COPY.link, /^先看/);
 });
 
 test('brainrot links use the confirmed SN deep-link route', () => {

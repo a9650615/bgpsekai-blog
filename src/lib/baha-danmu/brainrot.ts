@@ -1,5 +1,11 @@
 export const BRAINROT_HOME_URL = 'https://danmu.bgpsekai.club/';
 
+export const BRAINROT_PROMO_COPY = {
+  kicker: '看完作品，再回來看分析',
+  description: '如果不想被劇透，請先看完作品，再回來腦腐現場看分析。',
+  link: '看完作品，再回來看腦腐現場分析 ↗',
+} as const;
+
 const BAHAMUT_VIDEO_PATH = '/animeVideo.php';
 
 /**
