@@ -76,12 +76,10 @@ import {
 
 <style>
   .baha-danmu-tool {
-    width: min(100%, 1008px);
-    max-width: 1008px;
+    max-width: 720px;
     margin: 2rem auto;
-    padding: 1.5rem 1rem;
+    padding: 1.5rem;
     line-height: 1.6;
-    overflow-x: clip;
   }
 
   .baha-danmu-tool__hint {
@@ -109,10 +107,6 @@ import {
     border-radius: var(--radius, 8px);
     background: var(--background-color);
   }
-  .baha-danmu-tool__promo > div {
-    min-width: 0;
-    flex: 1 1 auto;
-  }
   .baha-danmu-tool__promo p,
   .baha-danmu-tool__promo h2 { margin: 0; }
   .baha-danmu-tool__promo-kicker {
@@ -136,18 +130,15 @@ import {
     font-weight: 700;
     text-decoration: none;
   }
-  .baha-danmu-tool__promo-link {
-    flex: 0 0 auto;
-    white-space: nowrap;
-  }
+  .baha-danmu-tool__promo-link { white-space: nowrap; }
   .baha-danmu-tool__promo-link:hover,
   .baha-danmu-tool__sn-link:hover { text-decoration: underline; }
 
   .baha-danmu-tool__form {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 8.75rem auto;
+    display: flex;
+    flex-wrap: wrap;
     gap: 0.75rem;
-    align-items: start;
+    align-items: flex-end;
     margin-bottom: 1rem;
     padding: 1.25rem;
     background: var(--secondary-subtle-color);
@@ -157,7 +148,10 @@ import {
   .baha-danmu-tool__field {
     display: flex;
     flex-direction: column;
-    min-width: 0;
+    flex: 1 1 240px;
+  }
+  .baha-danmu-tool__field--narrow {
+    flex: 0 0 140px;
   }
   .baha-danmu-tool__field span {
     font-size: 0.85rem;
@@ -166,7 +160,6 @@ import {
     margin-bottom: 0.35rem;
   }
   .baha-danmu-tool__field input {
-    min-width: 0;
     padding: 0.6rem 0.75rem;
     border: 1px solid var(--primary-border-color);
     border-radius: var(--radius, 8px);
@@ -184,10 +177,8 @@ import {
   }
   .baha-danmu-tool__sn-link {
     display: block;
-    max-width: 100%;
     margin-top: 0.4rem;
     font-size: 0.9rem;
-    overflow-wrap: anywhere;
   }
 
   .baha-danmu-tool__submit {
@@ -199,7 +190,7 @@ import {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    margin-top: 1.7rem;
+    flex: 0 0 auto;
     transition: background 0.15s ease, transform 0.1s ease;
   }
   .baha-danmu-tool__submit:hover:not(:disabled) {
@@ -240,20 +231,15 @@ import {
   }
   .baha-danmu-tool__download:hover { background: #258025; }
 
-  @media (max-width: 760px) {
+  @media (max-width: 640px) {
     .baha-danmu-tool { padding: 1rem 0.75rem; }
     .baha-danmu-tool__promo {
       align-items: flex-start;
       flex-direction: column;
     }
     .baha-danmu-tool__promo-link { white-space: normal; }
-    .baha-danmu-tool__form {
-      grid-template-columns: 1fr;
-    }
-    .baha-danmu-tool__submit {
-      width: 100%;
-      margin-top: 0;
-    }
+    .baha-danmu-tool__field--narrow { flex-basis: 100%; }
+    .baha-danmu-tool__submit { flex-basis: 100%; }
   }
 
 </style>
