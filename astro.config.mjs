@@ -11,9 +11,14 @@ import remarkBasePath from './src/utils/remark-base-path.mjs';
 //       SITE_URL  = https://blog.bgpsekai.club
 //       BASE_PATH = /
 //
-//   * GitHub Pages preview at a project subpath  — set in workflow
-//       SITE_URL  = https://a9650615.github.io
-//       BASE_PATH = /bgpsekai-blog/
+//   * A subpath host (e.g. GitHub Pages project site) — set via env
+//       SITE_URL  = https://<host>
+//       BASE_PATH = /<subpath>/
+//
+// NOTE: the GH Pages preview workflow that used the subpath form was removed
+// 2026-09-26 (it mirrored all 169 pages to github.io with self-referencing
+// canonicals — duplicate content). Nothing consumes BASE_PATH != '/' today;
+// the machinery stays because url.ts / remark-base-path still cover it.
 //
 // Astro requires `base` to start with `/`; we additionally normalise the
 // trailing slash so `import.meta.env.BASE_URL` and the `url()` helper can rely

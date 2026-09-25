@@ -131,11 +131,14 @@ GHOST_ADMIN_KEY=<keyId>:<secret>
 
 Phase 2 才需要:`PUBLIC_CF_BEACON_TOKEN`(Cloudflare Web Analytics)。
 
-過渡期還有一個 **GitHub Pages preview**(`.github/workflows/github-pages.yml`)
-部署到 `https://a9650615.github.io/bgpsekai-blog/`,build 時透過
-`SITE_URL` / `BASE_PATH` env 把站台搬到子路徑。**注意**:GitHub Pages 不
-支援 `_redirects`,所以 16 個 hex→pinyin tag、5 個 WP residue、RSS alias、
-Ghost-only 410 全部在預覽站不會運作 — 那些只在 CF Pages 上線後才生效。
+遷移過渡期曾有一個 GitHub Pages preview 部署到
+`https://a9650615.github.io/bgpsekai-blog/`,已於 2026-09-26 移除。它會把
+全站 169 頁完整複製一份到 github.io,且 canonical 指向自己而非
+`blog.bgpsekai.club` — 對搜尋引擎是重複內容。CF Pages 上線後預覽站已無用途,
+workflow 與 GitHub Pages 設定一併關閉。
+
+`astro.config.mjs` 的 `SITE_URL` / `BASE_PATH` env 覆寫機制保留但**目前無人使用**
+(唯一的 subpath 消費者就是那個已移除的 workflow)。
 
 ## 整合
 
