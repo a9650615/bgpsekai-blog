@@ -25,6 +25,10 @@ interface Props {
   featureImage?: ImageMetadata | string;
   ogType?: 'website' | 'article';
   publishDate?: Date;
+  /** Post author — drives the BlogPosting JSON-LD. Articles only. */
+  author?: string;
+  /** Post updatedDate — omitted from JSON-LD when absent. Articles only. */
+  modifiedDate?: Date;
 }
 
 const {
@@ -34,6 +38,8 @@ const {
   featureImage,
   ogType = 'website',
   publishDate,
+  author,
+  modifiedDate,
 } = Astro.props;
 
 // `Astro.site` is the bare origin (no base), and `Astro.url.pathname` already
@@ -59,6 +65,38 @@ function resolveOgImage(img: ImageMetadata | string | undefined): string | undef
   return `${siteOrigin}${img.src}`;
 }
 const ogImage = resolveOgImage(featureImage);
+
+// JSON-LD. The site had none before 2026-09-26; this does not affect whether a
+// page gets indexed, it feeds the rich result (date/author/breadcrumb) Google
+// renders under the title. `@graph` keeps WebSite + BlogPosting in one block.
+const siteName = '柏狗屁世界';
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': 'WebSite',
+    '@id': `${siteOrigin}/#website`,
+    url: `${siteOrigin}/`,
+    name: siteName,
+    inLanguage: 'zh-Hant',
+  },
+];
+if (ogType === 'article' && publishDate) {
+  graph.push({
+    '@type': 'BlogPosting',
+    '@id': `${canonicalUrl}#article`,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+    url: canonicalUrl,
+    headline: title,
+    ...(description ? { description } : {}),
+    ...(ogImage ? { image: ogImage } : {}),
+    datePublished: publishDate.toISOString(),
+    dateModified: (modifiedDate ?? publishDate).toISOString(),
+    ...(author ? { author: { '@type': 'Person', name: author } } : {}),
+    publisher: { '@type': 'Organization', name: siteName },
+    isPartOf: { '@id': `${siteOrigin}/#website` },
+    inLanguage: 'zh-Hant',
+  });
+}
+const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
 
 // GA4 — only inject when the env var is provided (avoids breaking builds in
 // development before the GA property is created). The §9.3 task will switch to
@@ -107,6 +145,10 @@ const faviconSvg =
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <link rel="canonical" href={canonicalUrl} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(jsonLd)}
+    />
     <link rel="icon" type="image/svg+xml" href={faviconSvg} />
 
     <meta property="og:site_name" content="柏狗屁世界" />

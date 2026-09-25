@@ -31,7 +31,7 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { entry } = Astro.props;
-const { title, pubDate, author, tags, featureImage, excerpt, metaTitle, metaDescription } =
+const { title, pubDate, updatedDate, author, tags, featureImage, excerpt, metaTitle, metaDescription } =
   entry.data;
 
 // Older / Newer neighbours (by pubDate desc).
@@ -73,6 +73,8 @@ const hasCover = featureImage && typeof featureImage !== 'string';
   featureImage={featureImage}
   ogType="article"
   publishDate={pubDate}
+  author={author}
+  modifiedDate={updatedDate}
 >
   <section
     class:list={[
