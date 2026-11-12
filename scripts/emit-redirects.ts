@@ -18,6 +18,17 @@ const WP_RESIDUE_REDIRECTS: RedirectEntry[] = [
   { from: '/login-post/', to: '/', status: 301 },
 ];
 
+/* URL shapes earlier versions of the site used for the same posts. */
+const LEGACY_SHAPES: RedirectEntry[] = [
+  // Ghost's feed lived at /rss/; Astro emits /rss.xml (route §7.8). This used to
+  // be a hand-added line in _redirects that a re-run of this script dropped.
+  { from: '/rss/', to: '/rss.xml', status: 301 },
+  // Ghost served an AMP twin of every post at /<slug>/amp/.
+  { from: '/:slug/amp/', to: '/:slug/', status: 301 },
+  // The 2022 static-site trial published posts under /posts/<slug>/.
+  { from: '/posts/:slug/', to: '/:slug/', status: 301 },
+];
+
 /* Ghost-only paths that no longer exist on the static site. */
 const GHOST_GONE: RedirectEntry[] = [
   { from: '/ghost/*', to: '/', status: 410 },
@@ -92,6 +103,7 @@ export function runEmitRedirects(): EmitStats {
     ...pending,
     ...ghostAdmin,
     ...WP_RESIDUE_REDIRECTS,
+    ...LEGACY_SHAPES,
     ...GHOST_GONE,
   ]);
 
