@@ -3,6 +3,7 @@ import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import pagefind from 'astro-pagefind';
 import remarkBasePath from './src/utils/remark-base-path.mjs';
+import remarkImageAlt from './src/utils/remark-image-alt.mjs';
 
 // `site` and `base` are env-driven so the same config can target two deploy
 // targets without code changes:
@@ -40,6 +41,7 @@ export default defineConfig({
     // Rewrite post-to-post `[text](/some-slug/)` links so they get the deploy
     // base prepended on subpath builds (e.g. GH Pages `/bgpsekai-blog/`).
     // Idempotent + only touches site-relative anchor links — see plugin doc.
-    remarkPlugins: [[remarkBasePath, { base: BASE_PATH }]],
+    // remarkImageAlt: body images with an empty alt get "<post title>（圖 N）".
+    remarkPlugins: [[remarkBasePath, { base: BASE_PATH }], remarkImageAlt],
   },
 });

@@ -1,0 +1,6 @@
+# The *.pages.dev hostnames serve the same pages as blog.bgpsekai.club. Keep
+# them out of search so they never compete with the real domain.
+https://bgpsekai-blog.pages.dev/*
+  X-Robots-Tag: noindex
+https://:deploy.bgpsekai-blog.pages.dev/*
+  X-Robots-Tag: noindex
