@@ -4,6 +4,9 @@ import mdx from '@astrojs/mdx';
 import pagefind from 'astro-pagefind';
 import remarkBasePath from './src/utils/remark-base-path.mjs';
 import remarkImageAlt from './src/utils/remark-image-alt.mjs';
+import remarkDemoteH1 from './src/utils/remark-demote-h1.mjs';
+import { readPostIndex } from './src/utils/content-index.mjs';
+import { MIN_POSTS_FOR_INDEXED_TAG } from './src/utils/seo-config.mjs';
 
 // `site` and `base` are env-driven so the same config can target two deploy
 // targets without code changes:
@@ -30,18 +33,41 @@ let BASE_PATH = process.env.BASE_PATH || '/';
 if (!BASE_PATH.startsWith('/')) BASE_PATH = '/' + BASE_PATH;
 if (!BASE_PATH.endsWith('/')) BASE_PATH = BASE_PATH + '/';
 
+// Sitemap inputs. `lastmod` tells crawlers which posts changed; single-post
+// tag pages are served noindex, so they must not be listed either.
+const postIndex = readPostIndex(new URL('./src/content/posts', import.meta.url).pathname);
+const pathOf = (pageUrl) => new URL(pageUrl).pathname.slice(BASE_PATH.length - 1);
+
 export default defineConfig({
   site: SITE_URL,
   base: BASE_PATH,
   trailingSlash: 'always',
   build: { format: 'directory' },
-  integrations: [sitemap(), mdx(), pagefind()],
+  integrations: [
+    sitemap({
+      filter: (page) => {
+        const tag = /^\/tag\/([^/]+)\//.exec(pathOf(page));
+        return !tag || (postIndex.tagCounts.get(tag[1]) ?? 0) >= MIN_POSTS_FOR_INDEXED_TAG;
+      },
+      serialize: (item) => {
+        const path = pathOf(item.url);
+        const post = /^\/([^/]+)\/$/.exec(path);
+        const lastmod = path === '/' || path === '/archive/'
+          ? postIndex.newest
+          : post && postIndex.lastmod.get(post[1]);
+        return lastmod ? { ...item, lastmod } : item;
+      },
+    }),
+    mdx(),
+    pagefind(),
+  ],
   image: { service: { entrypoint: 'astro/assets/services/sharp' } },
   markdown: {
     // Rewrite post-to-post `[text](/some-slug/)` links so they get the deploy
     // base prepended on subpath builds (e.g. GH Pages `/bgpsekai-blog/`).
     // Idempotent + only touches site-relative anchor links — see plugin doc.
     // remarkImageAlt: body images with an empty alt get "<post title>（圖 N）".
-    remarkPlugins: [[remarkBasePath, { base: BASE_PATH }], remarkImageAlt],
+    // remarkDemoteH1: body `#` headings become h2 (the template owns the h1).
+    remarkPlugins: [[remarkBasePath, { base: BASE_PATH }], remarkImageAlt, remarkDemoteH1],
   },
 });

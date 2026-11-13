@@ -40,8 +40,9 @@ const { posts, currentPage, totalPages } = Astro.props;
 ---
 
 <BaseLayout
-  title={`第 ${currentPage} 頁 - 柏狗屁世界`}
-  description="柏狗屁世界 — 雜談與筆記。"
+  title={`所有文章 第 ${currentPage} 頁 - 柏狗屁世界`}
+  description={`柏狗屁世界 blog 的文章列表，第 ${currentPage} 頁，共 ${totalPages} 頁：${posts.slice(0, 3).map((p) => p.data.title).join('、')}等。`}
+  pageType="CollectionPage"
   canonicalPath={`/page/${currentPage}/`}
   ogType="website"
 >

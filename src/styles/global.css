@@ -1036,3 +1036,67 @@ img {
     align-items: flex-start;
   }
 }
+
+/* ===== Related posts (post page) ===== */
+
+.post-related {
+  max-width: var(--max-content);
+  margin: 2.5rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--secondary-border-color);
+}
+.post-related__title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+  color: var(--titles-color);
+}
+.post-related__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+.post-related__list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+.post-related__list time {
+  flex: none;
+  font-size: 0.85em;
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== Archive (all posts) ===== */
+
+.archive {
+  padding-bottom: 3rem;
+}
+.archive__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+.archive__list li {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+.archive__list a,
+.post-related__list a {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.archive__list time {
+  flex: none;
+  width: 3.2em;
+  font-size: 0.9em;
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}

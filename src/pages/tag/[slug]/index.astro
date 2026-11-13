@@ -12,6 +12,7 @@ import PostCard from '../../../components/PostCard.astro';
 import Pagination from '../../../components/Pagination.astro';
 import tagsData from '../../../data/tags.json';
 import { url } from '../../../utils/url.ts';
+import { MIN_POSTS_FOR_INDEXED_TAG } from '../../../utils/seo.ts';
 
 interface TagRecord {
   slug: string;
@@ -36,6 +37,7 @@ export const getStaticPaths = (async () => {
         props: {
           tag,
           posts: posts.slice(0, POSTS_PER_PAGE),
+          postCount: posts.length,
           totalPages,
         },
       };
@@ -43,13 +45,19 @@ export const getStaticPaths = (async () => {
     .filter((x): x is NonNullable<typeof x> => x !== null);
 }) satisfies GetStaticPaths;
 
-const { tag, posts, totalPages } = Astro.props;
+const { tag, posts, postCount, totalPages } = Astro.props;
+// Name the posts in the description: 88 tags all saying 所有「X」相關文章 gave
+// search engines nothing to tell the pages apart.
+const tagSummary = `「${tag.name}」的 ${postCount} 篇文章：${posts.slice(0, 3).map((p) => p.data.title).join('、')}${postCount > 3 ? '等' : ''}。`;
 ---
 
 <BaseLayout
   title={`標籤:${tag.name} - 柏狗屁世界`}
-  description={tag.description ?? `所有「${tag.name}」相關文章。`}
+  description={tag.description ?? tagSummary}
   canonicalPath={`/tag/${tag.slug}/`}
+  noindex={postCount < MIN_POSTS_FOR_INDEXED_TAG}
+  pageType="CollectionPage"
+  breadcrumbs={[{ name: `標籤：${tag.name}`, path: `/tag/${tag.slug}/` }]}
   ogType="website"
 >
   <Hero

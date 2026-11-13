@@ -5,6 +5,7 @@ pubDate: 2020-04-14T10:33:44.000+08:00
 author: a9650615
 tags: []
 updatedDate: 2020-04-15T16:16:07.000+08:00
+metaDescription: "蔡銘祐（Ming You Tsai）的簡介：前端工程師，熟悉 React、React Native 與 Node.js。這裡整理了工作經歷、技能、得獎紀錄、作品與學歷。"
 excerpt: "蔡銘祐 (Ming You Tsai)a9650615@gmail.com / +886933963311 / Github [https://github.com/a9650615] Ming You have been developing HTML and PHP since high school, and has been developing NodeJS in college for over 5 years, especially mastering React. Not only enjoy at front-end technologies but also enhance other ability through online course Work Experience Front-end - Partido [http://partido.asia/v3] (2018/12 - 2019/04) * Implement maintainable flow of redux using redux-observable * Unit test r"
 ---
 

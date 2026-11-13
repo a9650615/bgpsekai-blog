@@ -14,6 +14,7 @@ import Giscus from '../components/Giscus.astro';
 import tagsData from '../data/tags.json';
 import { tagStyle } from '../utils/tagColor.ts';
 import { url } from '../utils/url.ts';
+import { MIN_POSTS_FOR_INDEXED_TAG, relatedPosts } from '../utils/seo.ts';
 
 interface TagRecord {
   slug: string;
@@ -41,6 +42,7 @@ const all = (await getCollection('posts')).sort(
 const idx = all.findIndex((p) => p.slug === entry.slug);
 const newer = idx > 0 ? all[idx - 1] : null;
 const older = idx >= 0 && idx < all.length - 1 ? all[idx + 1] : null;
+const related = relatedPosts(entry, all, 4);
 
 const { Content } = await entry.render();
 // reading-time hint via body length (approx, CN-leaning).
@@ -64,6 +66,19 @@ const pageTitle = metaTitle ?? title;
 const pageDescription = metaDescription ?? excerpt;
 
 const hasCover = featureImage && typeof featureImage !== 'string';
+
+const tagNames = tags.map((slug) => tagsBySlug.get(slug)?.name ?? slug);
+// Breadcrumb: 首頁 › <tag> › post, using the post's most-used tag so the
+// middle step is a real topic page. Tags too small to be indexed are skipped
+// (the post then hangs directly off the home page).
+const tagUse = (slug: string) => all.filter((p) => p.data.tags.includes(slug)).length;
+const topTag = [...tags].sort((a, b) => tagUse(b) - tagUse(a))[0];
+const breadcrumbs = [
+  ...(topTag && tagUse(topTag) >= MIN_POSTS_FOR_INDEXED_TAG
+    ? [{ name: tagsBySlug.get(topTag)?.name ?? topTag, path: `/tag/${topTag}/` }]
+    : []),
+  { name: title, path: `/${entry.slug}/` },
+];
 ---
 
 <BaseLayout
@@ -75,6 +90,8 @@ const hasCover = featureImage && typeof featureImage !== 'string';
   publishDate={pubDate}
   author={author}
   modifiedDate={updatedDate}
+  tagNames={tagNames}
+  breadcrumbs={breadcrumbs}
 >
   <section
     class:list={[
@@ -91,6 +108,7 @@ const hasCover = featureImage && typeof featureImage !== 'string';
           width={1920}
           height={900}
           loading="eager"
+          fetchpriority="high"
           decoding="async"
         />
       </div>
@@ -133,6 +151,20 @@ const hasCover = featureImage && typeof featureImage !== 'string';
     <div class="prose post-page__body">
       <Content />
     </div>
+
+    {related.length > 0 && (
+      <aside class="post-related" aria-labelledby="related-title">
+        <h2 class="post-related__title" id="related-title">延伸閱讀</h2>
+        <ul class="post-related__list">
+          {related.map((p) => (
+            <li>
+              <a href={url(`/${p.slug}/`)}>{p.data.title}</a>
+              <time datetime={p.data.pubDate.toISOString()}>{p.data.pubDate.getFullYear()}</time>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
 
     <Giscus />
 

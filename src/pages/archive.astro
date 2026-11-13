@@ -1,0 +1,51 @@
+---
+// /archive/ — every post on one page, newest first, grouped by year.
+//
+// Why: the home list is paginated, so an older post was only reachable six or
+// seven "next page" clicks from the home page (or through a tag). This page
+// puts every post two clicks from anywhere on the site, for readers and for
+// crawlers.
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import { url } from '../utils/url.ts';
+
+const all = (await getCollection('posts')).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+
+const byYear = new Map<number, typeof all>();
+for (const post of all) {
+  const year = post.data.pubDate.getFullYear();
+  byYear.set(year, [...(byYear.get(year) ?? []), post]);
+}
+const years = [...byYear.keys()].sort((a, b) => b - a);
+const fmt = (d: Date) =>
+  `${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}`;
+---
+
+<BaseLayout
+  title="所有文章 - 柏狗屁世界"
+  description={`柏狗屁世界 blog 的全部 ${all.length} 篇文章，依年份排列（${years[years.length - 1]}–${years[0]}）：開箱、程式筆記、工具與踩雷紀錄。`}
+  canonicalPath="/archive/"
+  pageType="CollectionPage"
+  breadcrumbs={[{ name: '所有文章', path: '/archive/' }]}
+>
+  <Hero title="所有文章" description={`共 ${all.length} 篇`} showCta={false} />
+
+  <div class="l-wrap archive">
+    {years.map((year) => (
+      <section class="archive__year" aria-labelledby={`y${year}`}>
+        <h2 class="section-title" id={`y${year}`}>{year}</h2>
+        <ul class="archive__list">
+          {byYear.get(year)!.map((post) => (
+            <li>
+              <time datetime={post.data.pubDate.toISOString()}>{fmt(post.data.pubDate)}</time>
+              <a href={url(`/${post.slug}/`)}>{post.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</BaseLayout>

@@ -50,8 +50,9 @@ const showBio =
 
 <BaseLayout
   title={`作者:${author.name} - 柏狗屁世界`}
-  description={showBio ? author.bio! : `${author.name} 的文章。`}
+  description={`${author.name} 在柏狗屁世界寫的 ${posts.length} 篇文章：${posts.slice(0, 3).map((p) => p.data.title).join('、')}${posts.length > 3 ? '等' : ''}。`}
   canonicalPath={`/author/${author.slug}/`}
+  pageType="ProfilePage"
   ogType="website"
 >
   <Hero

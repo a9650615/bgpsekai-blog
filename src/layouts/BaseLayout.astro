@@ -16,6 +16,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { url as baseUrl } from '../utils/url.ts';
+import { SITE_NAME, documentTitle, metaDescription } from '../utils/seo.ts';
 import '../styles/global.css';
 
 interface Props {
@@ -29,18 +30,39 @@ interface Props {
   author?: string;
   /** Post updatedDate — omitted from JSON-LD when absent. Articles only. */
   modifiedDate?: Date;
+  /** Tag display names — article:tag + JSON-LD keywords. Articles only. */
+  tagNames?: string[];
+  /**
+   * Trail from the home page down to this page (home itself is implied).
+   * Drives the BreadcrumbList JSON-LD, which is what search results show in
+   * place of the raw URL.
+   */
+  breadcrumbs?: Array<{ name: string; path: string }>;
+  /** Keep the page out of search results (thin lists, 404). Links still count. */
+  noindex?: boolean;
+  /** schema.org type for non-article pages, e.g. CollectionPage, ProfilePage. */
+  pageType?: string;
 }
 
 const {
   title,
-  description,
+  description: rawDescription,
   canonicalPath,
   featureImage,
   ogType = 'website',
   publishDate,
   author,
   modifiedDate,
+  tagNames = [],
+  breadcrumbs = [],
+  noindex = false,
+  pageType,
 } = Astro.props;
+
+// `title` stays the bare page name for share cards (og:site_name already
+// carries the brand); the <title> element gets the site name appended.
+const fullTitle = documentTitle(title);
+const description = metaDescription(rawDescription);
 
 // `Astro.site` is the bare origin (no base), and `Astro.url.pathname` already
 // includes the base — so when we have a `canonicalPath` from a caller (which
@@ -75,15 +97,28 @@ const shareImage = ogImage ?? DEFAULT_OG_IMAGE;
 // JSON-LD. The site had none before 2026-09-26; this does not affect whether a
 // page gets indexed, it feeds the rich result (date/author/breadcrumb) Google
 // renders under the title. `@graph` keeps WebSite + BlogPosting in one block.
-const siteName = '柏狗屁世界';
+const siteName = SITE_NAME;
+const abs = (path: string) => `${siteOrigin}${baseUrl(path)}`;
+const publisher = {
+  '@type': 'Organization',
+  '@id': `${siteOrigin}/#publisher`,
+  name: siteName,
+  url: `${siteOrigin}/`,
+  logo: { '@type': 'ImageObject', url: abs('/favicon-192.png'), width: 192, height: 192 },
+  sameAs: ['https://bgpsekai.club/'],
+};
 const graph: Record<string, unknown>[] = [
   {
     '@type': 'WebSite',
     '@id': `${siteOrigin}/#website`,
     url: `${siteOrigin}/`,
     name: siteName,
+    alternateName: ['柏狗屁世界 Blog', 'bgpsekai'],
+    description: '3C 開箱與敗家心得、程式筆記、巴哈動畫瘋工具與各種踩雷紀錄。',
+    publisher: { '@id': `${siteOrigin}/#publisher` },
     inLanguage: 'zh-Hant',
   },
+  publisher,
 ];
 if (ogType === 'article' && publishDate) {
   graph.push({
@@ -96,10 +131,37 @@ if (ogType === 'article' && publishDate) {
     ...(ogImage ? { image: ogImage } : {}),
     datePublished: publishDate.toISOString(),
     dateModified: (modifiedDate ?? publishDate).toISOString(),
-    ...(author ? { author: { '@type': 'Person', name: author } } : {}),
-    publisher: { '@type': 'Organization', name: siteName },
+    ...(author
+      ? { author: { '@type': 'Person', name: author, url: abs(`/author/${author}/`) } }
+      : {}),
+    publisher: { '@id': `${siteOrigin}/#publisher` },
+    ...(tagNames.length > 0 ? { keywords: tagNames.join(', ') } : {}),
     isPartOf: { '@id': `${siteOrigin}/#website` },
     inLanguage: 'zh-Hant',
+  });
+}
+if (ogType !== 'article') {
+  graph.push({
+    '@type': pageType ?? 'WebPage',
+    '@id': `${canonicalUrl}#webpage`,
+    url: canonicalUrl,
+    name: title,
+    ...(description ? { description } : {}),
+    isPartOf: { '@id': `${siteOrigin}/#website` },
+    inLanguage: 'zh-Hant',
+  });
+}
+if (breadcrumbs.length > 0) {
+  const trail = [{ name: '首頁', path: '/' }, ...breadcrumbs];
+  graph.push({
+    '@type': 'BreadcrumbList',
+    '@id': `${canonicalUrl}#breadcrumb`,
+    itemListElement: trail.map((b, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: b.name,
+      item: abs(b.path),
+    })),
   });
 }
 const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
@@ -109,11 +171,9 @@ const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
 // a hard fail once `PUBLIC_GA4_MEASUREMENT_ID` is wired in CI.
 const ga4Id = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID as string | undefined;
 
-// Inline SVG favicon — original Ghost theme used `/favicon.ico` but we never
-// imported one. A small data-URI puppy emoji keeps this self-contained until a
-// proper asset is added.
-const faviconSvg =
-  'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐶</text></svg>';
+// Favicon: real files under public/. Until 2026-11-13 this was a data: URI,
+// which browsers accept but Google cannot fetch, so search results showed the
+// generic globe. PNGs are rendered from the same puppy emoji.
 ---
 
 <!doctype html>
@@ -148,24 +208,39 @@ const faviconSvg =
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
+    <title>{fullTitle}</title>
     {description && <meta name="description" content={description} />}
+    <meta
+      name="robots"
+      content={noindex
+        ? 'noindex,follow'
+        : 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'}
+    />
     <link rel="canonical" href={canonicalUrl} />
     <script
       type="application/ld+json"
       set:html={JSON.stringify(jsonLd)}
     />
-    <link rel="icon" type="image/svg+xml" href={faviconSvg} />
+    <link rel="icon" href={baseUrl('/favicon.ico')} sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="192x192" href={baseUrl('/favicon-192.png')} />
+    <link rel="apple-touch-icon" href={baseUrl('/apple-touch-icon.png')} />
 
     <meta property="og:site_name" content="柏狗屁世界" />
+    <meta property="og:locale" content="zh_TW" />
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={shareImage} />
+    <meta property="og:image:alt" content={title} />
     {ogType === 'article' && publishDate && (
       <meta property="article:published_time" content={publishDate.toISOString()} />
     )}
+    {ogType === 'article' && modifiedDate && (
+      <meta property="article:modified_time" content={modifiedDate.toISOString()} />
+    )}
+    {ogType === 'article' && author && <meta name="author" content={author} />}
+    {ogType === 'article' && tagNames.map((t) => <meta property="article:tag" content={t} />)}
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />

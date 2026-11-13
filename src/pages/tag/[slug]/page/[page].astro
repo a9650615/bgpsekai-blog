@@ -60,6 +60,7 @@ const { tag, posts, currentPage, totalPages } = Astro.props;
   title={`標籤:${tag.name} - 第 ${currentPage} 頁 - 柏狗屁世界`}
   description={tag.description ?? `所有「${tag.name}」相關文章。`}
   canonicalPath={`/tag/${tag.slug}/page/${currentPage}/`}
+  pageType="CollectionPage"
   ogType="website"
 >
   <Hero

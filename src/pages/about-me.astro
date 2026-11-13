@@ -13,13 +13,14 @@ if (!entry) {
 }
 
 const { Content } = await entry.render();
-const { title, excerpt, featureImage } = entry.data;
+const { title, excerpt, featureImage, metaDescription } = entry.data;
 ---
 
 <BaseLayout
   title={title}
-  description={excerpt}
+  description={metaDescription ?? excerpt}
   canonicalPath="/about-me/"
+  pageType="AboutPage"
   ogType="website"
 >
   <Hero
